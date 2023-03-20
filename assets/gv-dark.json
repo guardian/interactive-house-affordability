@@ -1,0 +1,105 @@
+{
+    "version": 8,
+    "sources": {
+        "vector-tiles-bg": {
+            "type": "vector",
+            "tiles": [
+                "https://interactive.guim.co.uk/maptiles/world/{z}/{x}/{y}.pbf"
+            ]
+        },
+        "vector-tiles": {
+            "type": "vector",
+            "tiles": [
+                "https://interactive.guim.co.uk/maptiles/postal-districts/{z}/{x}/{y}.pbf"
+            ],
+            "promoteId": "PostDist"
+        }
+    },
+    "sprite": "",
+    "glyphs": "https://interactive.guim.co.uk/maptiles/fonts/{fontstack}/{range}.pbf",
+    "layers": [
+        {
+            "id": "background",
+            "type": "background",
+            "paint": {
+                "background-color": "#E6E9EC"
+            }
+        },
+        {
+            "id": "admin_sub",
+            "type": "line",
+            "source": "vector-tiles-bg",
+            "source-layer": "boundary",
+            "filter": [
+                "all",
+                [
+                    "<=",
+                    "admin_level",
+                    2
+                ],
+                [
+                    "!=",
+                    "maritime",
+                    1
+                ]
+            ],
+            "paint": {
+                "line-color": "#b3b3b4"
+            }
+        },
+        {
+            "id": "water",
+            "type": "fill",
+            "source": "vector-tiles-bg",
+            "source-layer": "water",
+            "filter": [
+                "all",
+                [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ],
+                [
+                    "!=",
+                    "intermittent",
+                    1
+                ],
+                [
+                    "!=",
+                    "brunnel",
+                    "tunnel"
+                ]
+            ],
+            "layout": {
+                "visibility": "visible"
+            },
+            "paint": {
+                "fill-color": "#90DCFF"
+            }
+        },
+        {
+            "id": "postal-districts",
+            "type": "fill",
+            "source": "vector-tiles",
+            "source-layer": "PostalDistrict",
+            "paint": {
+              "fill-color": "#dadada"
+            }
+        },
+        {
+            "id": "postal-districts-stroke",
+            "type": "line",
+            "source": "vector-tiles",
+            "source-layer": "PostalDistrict",
+            "paint": {
+                "line-color":"#000",
+                "line-opacity": [
+                    "case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    1,
+                    0
+                    ]
+            }
+        }
+    ]
+}
