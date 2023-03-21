@@ -30,7 +30,7 @@ let map = new mapGl({
     container: 'gv-map', // container id
     style: dark,
     bounds: [[-9.0,49.75], [2.01,61.01]],
-    interactive: false,
+    interactive: true,
     zoom:6
 });
 
@@ -158,9 +158,34 @@ map.on("load", () => {
 // })
 
 const onSelected = (feedback) => {
-    console.log()
+    console.log(map.getLayer('postal-districts'))
 
-    let match = data.find(d => d.Postcode_district === feedback.detail.selection.value.code.split(' - ')[0])
+    console.log(map.querySourceFeatures('vector-tiles', {
+        'sourceLayer': 'PostalDistrict'
+      }))
+
+    
+    let code = feedback.detail.selection.value.code.split(' - ')[0]
+
+    let match = data.find(d => d.Postcode_district === code)
+
+    console.log(feedback.detail.selection.value)
+
+    //map.setPaintProperty("postal-districts-stroke",'line-opacity', ["match",["get", "PostDist"],code,1,1])
+
+    map.setFeatureState({
+        source: 'vector-tiles',
+        sourceLayer: 'PostalDistrict',
+        id: code,
+        }, {
+        hover: true
+        });
+
+    // map.setFeatureState(
+    //     { source: 'vector-tiles', sourceLayer: 'PostalDistrict', id: hoveredStateId },
+    //     { hover: true }
+    // );
+
 
     map.flyTo({
         zoom:10,
