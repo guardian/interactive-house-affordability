@@ -1,10 +1,28 @@
 <div id="gv-wrapper">
     <div id="gv-map"></div>
-    
+    <div id="gv-map-tooltip"></div>
     <div id="gv-control-panel">
-        <div class="map-search-box">
-            <input id="map-autoComplete" type="text" dir="ltr" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="none" maxlength="2048" tabindex="1" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="autoComplete_list" aria-autocomplete="both" placeholder="Search by country">
-            <img class="map-search-cancel" src="<%= path %>/icon-cancel.svg">
+        <form id="gv-form" action="">
+            <div class="gv-tab">Salary:
+                <p><input id="gv-salary-input" type="text" autocomplete="off" placeholder="Enter gross annual household income"></p>
+            </div>
+            <div class="gv-tab">Location:
+                <p><input id="gv-autoComplete" type="text" dir="ltr" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="none" maxlength="2048" tabindex="1" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="autoComplete_list" aria-autocomplete="both" placeholder="Search by location"></p>
+            </div>
+
+            <div id="error-mesage"></div>
+
+            <div id="buttons-wrapper" style="overflow:auto;">
+                <div>
+                <button type="button" id="prevBtn" style="display: none;">Previous</button>
+                <button type="button" id="nextBtn" class="inactive" disabled>Next</button>
+                </div>
+            </div>
+        </form>
+        <div id="reset-map-wrapper" style="overflow:auto;">
+            <div>
+              <button type="button" id="resetBtn">Reset map</button>
+            </div>
         </div>
     </div>
 </div>

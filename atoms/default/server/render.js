@@ -11,19 +11,34 @@ export async function render() {
     const listAreas = sheet.sheets.Master.map(d => d['Town/Area'].split(', '))
     const listCodes = sheet.sheets.Master.map(d => d.Postcode_district)
 
+    let max = 0
+    let arr 
+
+    listAreas.forEach(a => {
+
+        if(a.length > max)
+        {
+            max = a.length
+            arr = a
+        }
+
+    })
+
+    console.log(max,arr)
+
+
     const areasAndCodes = []
     
     listAreas.forEach((element,i) => {
 
         element.forEach(el => {
             
-            let row = areasAndCodes.push({area:el, code:listCodes[i] + ' - ' + el}) 
+            let row = areasAndCodes.push({area:el, areaCode:listCodes[i] + ' | ' + el, code: listCodes[i]}) 
         })
         
     });
 
     fs.writeFileSync(`assets/areas-codes.json`, JSON.stringify(areasAndCodes));
-
 
     return mainHTML;
 } 
