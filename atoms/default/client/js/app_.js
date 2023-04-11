@@ -3,11 +3,9 @@ import dark from 'assets/gv-dark.json'
 import dataRaw from 'assets/sheet.json'
 import Search from 'shared/js/components/Search.js'
 import Salary from 'shared/js/components/Salary.js'
-import Formula from 'shared/js/components/Formula.js'
-import Validate from 'shared/js/components/Validation.js'
+import Expression from 'shared/js/components/Expression.js'
+import Form from 'shared/js/components/Form.js'
 import postcodes from 'assets/areas-codes.json'
-
-
 
 const tooltip = document.querySelector('#gv-map-tooltip');
 const salaryInput = document.querySelector('#map-salary-input');
@@ -188,7 +186,7 @@ map.on("load", () => {
         );
         }
         hoveredStateId = null;
-        });
+    });
 
 });
 
@@ -256,7 +254,8 @@ const onValidate = (callback) => {
 
         if(callback.value == 1){
             console.log('salary',salary.getSalary())
-            let expression = new Formula(data, salary.getSalary())
+            let expression = new Expression(data, salary.getSalary())
+
             map.setPaintProperty("postal-districts",'fill-color', expression.expression())
 
         }
@@ -269,7 +268,7 @@ const onValidate = (callback) => {
 }
 
 
-const validationForm = new Validate({
+const validationForm = new Form({
     next:next,
     prev:prev,
     reset:reset,

@@ -9,14 +9,12 @@ class Salary{
         this.errorMessage = config.errorMessage;
         this.stripValue;
         this.salary;
-        
+
         this.salaryInput()
         
     }
 
     salaryInput(){
-
-        console.log('paso por aqui')
 
         this.validate = (value) => {
 
@@ -38,18 +36,27 @@ class Salary{
 
             if(this.validate(this.stripValue))
             {
-                this.salary = {type:'salary', value:this.stripValue};
+                this.setSalary(this.stripValue);
                 this.input.value = numberWithCommas(this.salary.value);
-                this.callback(this.salary)
+                this.callback()
             }
             else{
-                this.callback({type:'salary', value:null})
+                this.setSalary(null);
+                this.callback()
             }
         });
     }
 
+    setSalary(value){
+        this.salary = {type:'salary', value:value}
+    }
+
     getSalary(){
         return this.salary
+    }
+
+    reset(){
+        this.salary = null
     }
 }
 

@@ -2,10 +2,11 @@
 @import "fonts";
 @import "mq";
 @import "palette";
-//@import "dcr_enhancer"; // default left column enhancer, works with inline, showcase and immersive weighting
-@import "full_immersive_enhancer"; // full-width enhancer, to be used with immersive weighting. Removes left colum, sets 100vw atom width at any breakpoint
+@import "dcr_enhancer"; // default left column enhancer, works with inline, showcase and immersive weighting
+//@import "full_immersive_enhancer"; // full-width enhancer, to be used with immersive weighting. Removes left colum, sets 100vw atom width at any breakpoint
 // @import "darkmodedefault"; // basic media queries for adding dark mode and several default colours
-@import "autocomplete";
+@import "search_location";
+@import "control_panel";
 
 /*----- Vertical scrollbar width used for sizing full viewport width elements -----*/
 :root {
@@ -55,25 +56,10 @@
     height: 100vh;
 }
 
-#map { position: absolute; top: 0; bottom: 0;}
 
 .maplibregl-canvas{
     max-width: 100%;
 }
-
-.maplibregl-popup {
-    max-width: 400px;
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-}
-
-#gv-control-panel{
-    width: 100%;
-    max-width: 460px;
-    position: absolute;
-    top: 0;
-}
-
-
 
 #gv-map-tooltip{
     position: absolute;
@@ -81,136 +67,15 @@
     background-color: #fff;
 }
 
-button {
-    background-color: #ff0000;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 17px;
-    font-family: Raleway;
-    cursor: pointer;
+.gv-location{
+    position: absolute;
+    min-width: 320px;
+    right:0;
 }
 
-.no_result {
-    margin: 0.3rem;
-    padding: 0.3rem 0.5rem;
-    list-style: none;
-    text-align: left;
-    font-size: 1rem;
-    color: #212121;
-    transition: all 0.1s ease-in-out;
-    border-radius: 0.35rem;
-    background-color: rgba(255, 255, 255, 1);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: all 0.2s ease;
-    outline: none;
-  }
-  
-  h1 {
-    color: rgba(255, 122, 122, 1);
-    transition: var(--transition-1);
-  }
-  
-  h1 > a {
-    text-decoration: none;
-    color: rgba(255, 122, 122, 1);
-  }
-  
-  h1 > a::selection {
-    color: rgb(255, 122, 122);
-  }
-  
-  h4 {
-    margin-bottom: 5px;
-    color: #ffc6c6;
-  }
-  
-  h4::selection {
-    color: #ffc6c6;
-  }
-  
-  .mode {
-    margin-top: 20px;
-  }
-  
-  .toggle {
-    display: flex;
-    border: 1px solid #ffc6c6;
-    height: 35px;
-    width: 120px;
-    border-radius: 50px;
-    justify-content: flex-start;
-    align-content: center;
-    transition: var(--transition-2);
-  }
-  
-  .toggler {
-    display: grid;
-    cursor: pointer;
-    background-color: rgba(255, 198, 198, 1);
-    color: #fff;
-    height: 25px;
-    width: 60px;
-    border-radius: 50px;
-    margin: 5px;
-    text-align: center;
-    align-content: center;
-    align-self: flex-start;
-    transition: var(--transition-2);
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -webkit-touch-callout: none;
-  }
-  
-  .toggler:hover {
-    width: 65px;
-    background-color: rgba(255, 122, 122, 0.7);
-  }
-  
-  .toggler::selection {
-    color: #fff;
-  }
-  
-  .strict {
-    display: inline;
-  }
-  
-  .loose {
-    display: inline;
-  }
-  
-  .selection {
-    margin-top: 25vh;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ffc6c6;
-    transition: var(--transition-1);
-  }
-  
-  .selection::selection {
-    color: #64ceaa;
-  }
-  
-  @media only screen and (max-width: 600px) {
-    .selection {
-      margin-top: 15vh;
-    }
+table {
+    width: 100%;
+    border-collapse: collapse;
   }
 
-.active{
-    opacity: 1;
-    cursor: pointer;
-}  
-  
-.inactive{
-    opacity: .5;
-    cursor: default;
-    
-}
 
-.gv-tab:nth-child(2){
-    display: none;
-}

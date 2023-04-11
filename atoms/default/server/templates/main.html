@@ -1,28 +1,63 @@
 <div id="gv-wrapper">
-    <div id="gv-map"></div>
-    <div id="gv-map-tooltip"></div>
-    <div id="gv-control-panel">
-        <form id="gv-form" action="">
-            <div class="gv-tab">Salary:
-                <p><input id="gv-salary-input" type="text" autocomplete="off" placeholder="Enter gross annual household income"></p>
-            </div>
-            <div class="gv-tab">Location:
-                <p><input id="gv-autoComplete" type="text" dir="ltr" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="none" maxlength="2048" tabindex="1" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="autoComplete_list" aria-autocomplete="both" placeholder="Search by location"></p>
-            </div>
-
-            <div id="error-mesage"></div>
-
-            <div id="buttons-wrapper" style="overflow:auto;">
-                <div>
-                <button type="button" id="prevBtn" style="display: none;">Previous</button>
-                <button type="button" id="nextBtn" class="inactive" disabled>Next</button>
+    <div class="gv-location">
+        <span class="gv-location__label">Select your own area</span>
+        <form class="gv-location__form">
+            <div class="gv-location__input_wrapper">
+                <div class="gv-location__input">
+                    <input id="gv-autoComplete" type="text" dir="ltr" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="none" maxlength="2048" tabindex="1" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="autoComplete_list" aria-autocomplete="both" placeholder="Search by location">
+                    <label id="gv-location__error-mesage"></label>
                 </div>
+                <button class="gv-location-reset__btn" type="button" tabindex="2" data-focus="">
+                    Reset
+                </button>
             </div>
         </form>
-        <div id="reset-map-wrapper" style="overflow:auto;">
-            <div>
-              <button type="button" id="resetBtn">Reset map</button>
+        
+    </div>
+    <div id="gv-map"></div>
+    <div id="gv-map-tooltip"></div>
+    <div id="scroll-message">Use command + scroll to zoom in</div>
+    <div id="scroll-message-mobile">Use two fingers to move the map</div>
+    <div id="gv-control-panel">
+        <div class="gv-results-wrapper">
+            <article id="gv-article" class="gv-tab">
+                <div class="gv-article-header">Header</div>
+                <p class="gv-article-paragraph">Description text</p>
+            </article>
+            <form id="gv-form" class="gv-tab">
+                <div class="gv-form__income-wrapper">
+                    <label>Introduce your income</label>
+                    <input id="gv-salary-input" type="text" autocomplete="off" placeholder="Enter gross annual household income">
+                    <label id="gv-salary__error-mesage"></label>
+                </div>
+                <div class="gv-form__bedrooms-wrapper">
+                    <label>Select number of rooms</label>
+                    <select id="gv-bedrooms-input" name="number-of-bedrooms" multiple="" autocomplete="off">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </form>
+            <div id="gv-table" class="gv-tab">
+                <h2>[Postal_district_name]</h2>
+                <div class="gv-table__wrapper">
+                    <table>
+                        <tr>
+                            <td>Median house price</td>
+                            <td id="gv-table__house-price">£[Median_house_price]</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td id="gv-table__annual-income">[xx] times annual income</td>
+                        </tr>
+                    </table>
+                    <label id="gv-table__loal-authority">The majority of areas in this postcode district fall in [LA] local authority.</label>
+                </div>
             </div>
         </div>
+        <button class="gv-panel-btn" id="prevBtn"></button>
+        <button class="gv-panel-btn" id="nextBtn">Start</button>
     </div>
 </div>

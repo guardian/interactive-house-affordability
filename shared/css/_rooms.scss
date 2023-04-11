@@ -1,0 +1,70 @@
+#gv-bedrooms-input{
+  height: 44px;
+  border: none;
+  overflow: hidden;
+  border-color:none;
+  box-shadow: none;
+  outline: 0 none;
+  background: transparent;
+
+  
+
+
+  option{
+   //background-color: white;
+
+    // &.selected{
+    //   color: white;
+    //   background-color:black !important ;
+    // }
+  }
+
+  option:checked{
+    color: rgb(246, 250, 0);
+    background-color: rgb(5, 26, 1);
+  }
+
+  option[selected]{
+    
+  }
+
+  
+}
+
+
+
+
+
+
+
+
+
+
+#gv-bedrooms-input::-moz-focus-inner {
+  border: 0;
+}
+#gv-bedrooms-input:focus {
+  outline: none;
+}
+#gv-bedrooms-input option{
+  width: 60px;
+  font-size: 1.2em;
+  padding: 10px 0;
+  text-align: center;
+  margin-right: 20px;
+  display: inline-block;
+  cursor: pointer;
+  border:rgb(204, 204, 0) solid 1px;
+  border-radius: 5px;
+  color: black;
+}
+
+.gv-tab {
+  display: inline-block;
+
+
+  select
+  {
+    scrollbar-width: none;  
+  }
+}

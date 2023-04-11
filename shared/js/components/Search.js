@@ -4,18 +4,25 @@ class Search{
 
     constructor(config) {
         this.selector = config.selector;
-        this.input = config.input;
-        this.data = config.data;
-        this.keys = config.keys;
         this.placeHolder = config.placeHolder;
-        this.callback = config.callback;
+        this.data = config.data;
         this.errorMessage = config.errorMessage;
+        this.input = config.input;
+        this.keys = config.keys;
+        this.resetBtn = config.resetBtn;
+        this.callback = config.callback || null;
         this.search = null;
+        this.autoComplete = null;
 
-        this.autoComplete;
+        this.autoCompleteJs()
+        
+        this.resetBtn.addEventListener('click',() => this.reset())
+        
     }
 
     autoCompleteJs() {
+
+
 
         this.autoComplete = new autoComplete({
             selector: this.selector,
@@ -30,11 +37,13 @@ class Search{
             resultsList: {
                 element: (list, data) => {
                     if (!data.results.length) {
-                        this.errorMessage.innerHTML = 'No results'
-                        this.callback({type:'search', value:null})
+       
+                        if(this.errorMessage)this.errorMessage.innerHTML = 'No results'
+                        if(this.callback)this.callback({type:'search', value:null})
+                        this.hideResetBtn()
                     }
                     else{
-                        this.errorMessage.innerHTML = ''
+                        if(this.errorMessage)this.errorMessage.innerHTML = ''
                     }
                 },
                 noResults: true,
@@ -55,49 +64,50 @@ class Search{
             }
         });
 
+        this.autoComplete.input.addEventListener('input', (event) => {
+            
+            this.search = {type:'search', value:null};
+
+            if(this.callback)this.callback(this.search)
+
+            this.hideResetBtn()
+        })
+
         this.autoComplete.input.addEventListener("selection", (event) => {
 
             this.input.value = event.detail.selection.value.areaCode
 
             this.search = {type:'search', value:event};
             
-            this.callback(this.search)
+            if(this.callback)this.callback(this.search)
+
+            this.showResetBtn()
 
         })
 
-        // const action = (action) => {
-        //     const title = document.querySelector("h1");
-        //     const mode = document.querySelector(".mode");
-        //     const selection = document.querySelector(".selection");
-        //     const footer = document.querySelector(".footer");
-          
-        //     if (action === "dim") {
-        //       title.style.opacity = 1;
-        //       mode.style.opacity = 1;
-        //       selection.style.opacity = 1;
-        //     } else {
-        //       title.style.opacity = 0.3;
-        //       mode.style.opacity = 0.2;
-        //       selection.style.opacity = 0.1;
-        //     }
-        //   };
+    }
 
-        // Blur/unBlur page elements on input focus
-        // ["focus", "blur"].forEach((eventType) => {
-        //     this.autoComplete.input.addEventListener(eventType, () => {
-        //     // Blur page elements
-        //     if (eventType === "blur") {
-        //         action("dim");
-        //     } else if (eventType === "focus") {
-        //         // unBlur page elements
-        //         action("light");
-        //     }
-        //     });
-        // });
+    hideResetBtn(){
+        this.resetBtn.style.visibility = 'hidden'
+    }
+
+    showResetBtn(){
+        this.resetBtn.style.visibility = 'visible'
     }
 
     getSearch(){
         return this.search
+    }
+
+    reset(){
+        this.search = null
+        this.input.value = ''
+        this.hideResetBtn()
+        this.callback()
+    }
+
+    disable(){
+        this.input.disabled = true;
     }
 }
 
