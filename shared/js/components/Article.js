@@ -1,8 +1,9 @@
 class Article{
 
     constructor(config){
-        this.header = config.header
-        this.paragraph = config.paragraph
+        
+        this.header = config.article.querySelector('#gv-article-header')
+        this.paragraph = config.article.querySelector('#gv-article-paragraph')
     }
 
     setData(data){

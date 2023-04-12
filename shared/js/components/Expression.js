@@ -18,7 +18,7 @@ class Expression {
                     let rentPrice;
 
                     if(this.rooms == 1){
-                        console.log(d['1BedSale_MedianPrice'],d['1BedRent_MedianPrice'])
+
                         salePrice = +d['1BedSale_MedianPrice'].replace(/\D+/g, '');
                         rentPrice = +d['1BedRent_MedianPrice'].replace(/\D+/g, '');
                     }
@@ -112,38 +112,3 @@ class Expression {
 }
 
 export default Expression
-
-// getColor = (d, salary) => {
-
-//     let color;
-
-//     if (d.use == '-') {
-//         color = '#dadada'
-//     }
-//     else if (+d.AllRent_MedianPrice <= ((salary / 12) * 0.3) && +d.AllSale_MedianPrice * 0.9 <= salary * 2.5) {
-//         color = '#056DA1'
-//     }
-//     else if (+d.AllRent_MedianPrice <= ((salary / 12) * 0.3) && +d.AllSale_MedianPrice * 0.9 > salary * 2.5 && +d.AllSale_MedianPrice * 0.9 <= salary * 3.5) {
-//         color = '#1896D7'
-//     }
-//     else if (+d.AllRent_MedianPrice <= ((salary / 12) * 0.3) && +d.AllSale_MedianPrice * 0.9 > salary * 3.5 && +d.AllSale_MedianPrice * 0.9 <= salary * 4.5) {
-//         color = '#E6F5FF'
-//     }
-//     else if (+d.AllSale_MedianPrice * 0.9 > salary * 4.5 && +d.AllRent_MedianPrice <= (salary / 12) * 0.2) {
-//         color = '#ffbac8'
-//     }
-//     else if (+d.AllSale_MedianPrice * 0.9 > salary * 4.5 && +d.AllRent_MedianPrice > (salary / 12) * 0.2 && +d.AllRent_MedianPrice <= ((salary / 12) * 0.3)) {
-//         color = '#c70000'
-//     }
-//     else if (+d.AllSale_MedianPrice * 0.9 > salary * 4.5 && +d.AllRent_MedianPrice > ((salary / 12) * 0.3)) {
-//         color = '#880105'
-//     }
-//     else if (+d.AllSale_MedianPrice * 0.9 <= salary * 4.5 && +d.AllRent_MedianPrice > ((salary / 12) * 0.3)) {
-//         color = '#ffe500'
-//     }
-//     else {
-//         color = '#dadada'
-//     }
-
-//     return color
-// }

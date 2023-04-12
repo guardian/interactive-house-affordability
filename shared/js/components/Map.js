@@ -10,6 +10,7 @@ class Map{
         this.style = config.style;
         this.zoom = config.zoom;
         this.center = config.center;
+        this.interactive = config.interactive;
         this.hoverId = null;
 
         this.tooltip = config.tooltip;
@@ -26,7 +27,7 @@ class Map{
             style: this.style,
             zoom: this.zoom,
             center:this.center,
-            interactive:true,
+            interactive:this.interactive,
             maxZoom:10,
             maxBounds: this.maxBounds,
             boxZoom:true

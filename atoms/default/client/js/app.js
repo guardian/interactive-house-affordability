@@ -10,6 +10,8 @@ import Article from "../../../../shared/js/components/Article";
 
 import Form from 'shared/js/components/Form'
 
+const isMobile = window.matchMedia('(max-width: 600px)').matches; 
+
 const data = dataRaw.sheets.Master 
 
 const tooltip = document.querySelector('#gv-map-tooltip');
@@ -21,19 +23,14 @@ const next = document.querySelector('#nextBtn')
 const prev = document.querySelector('#prevBtn')
 const tabs = document.querySelectorAll('.gv-tab')
 
-const articleHeader = document.querySelector('#gv-article-header')
-const articleParagraph = document.querySelector('#gv-article-paragraph')
+const articleTag = document.querySelector('#gv-article')
 const tableTag = document.querySelector('#gv-table')
 
-const table = new Table({
-
-    table:tableTag
-
-})
-
 const article = new Article({
-    header:articleHeader,
-    paragraph:articleParagraph,
+    article:articleTag
+})
+const table = new Table({
+    table:tableTag
 })
 
 const buttonNames = [
@@ -118,7 +115,6 @@ const onMapClick = (event) => {
 
     nav.setStep(2)
     onNavChange(2)
-
 }
 
 const map = new Map({
@@ -132,7 +128,8 @@ const map = new Map({
     onLoaded:onMapLoaded.bind(this),
     onMove:onMapMove.bind(this),
     onLeave:onMapLeave.bind(this),
-    onClick:onMapClick.bind(this)
+    onClick:onMapClick.bind(this),
+    interactive:isMobile ? false : true
 })
 
 const searchOnResult = (result) => {
@@ -151,7 +148,6 @@ const searchOnResult = (result) => {
             nav.setStep(2)
             onNavChange(2)
         }
-        
     }
     else{
         map.reset()
@@ -206,26 +202,24 @@ const onNavChange = (step) => {
     }
 
     if(step == 1 && !form.getValid()){
-        map.reset()
+        //map.reset()
         nav.disable(next)
     }
     else if(step == 1 && form.getValid()){
-        map.reset()
+        //map.reset()
         nav.enable(next)
     }
 
     if(step == 2){
+        let salary = form.salary.getSalary().value;
+        let rooms = form.rooms.getRooms().value;
+        let expression = new Expression({data:data, salary:salary, rooms:rooms})
+        map.paint(expression.getExpression())
 
         if(!map.getAreaSelected()){
 
             if(form.salary.getSalary().value && form.rooms.getRooms().value)
             {
-                let salary = form.salary.getSalary().value;
-                let rooms = form.rooms.getRooms().value;
-
-                let expression = new Expression({data:data, salary:salary, rooms:rooms})
-                map.paint(expression.getExpression())
-
                 tabs[0].style.display = 'block';
                 tabs[2].style.display = 'none';
         
@@ -233,20 +227,14 @@ const onNavChange = (step) => {
                     header:'UK',
                     paragraph:`Based on a household income of ${form.salary.getSalary().value} and ${form.rooms.getRooms().value} room${form.rooms.getRooms().value > 1 ? 's' : ''}, the following areas are judged to be affordable. Select an area to get more detail.`
                 })
-
             }
-
         }
         else{
 
             let match = data.find(f => f.Postcode_District === map.getAreaSelected());
             let area = map.getAreaSelected();
-            let salary = form.salary.getSalary().value;
-            let rooms = form.rooms.getRooms().value;
             let housePrice = match[`${rooms}BedSale_MedianPrice`];
             let houseRent = match[`${rooms}BedRent_MedianPrice`];
-
-            console.log(match)
 
             if(form.salary.getSalary().value && form.rooms.getRooms().value){
 
@@ -274,30 +262,8 @@ const onNavChange = (step) => {
                 })
 
             }
-
-            
-
-    //         match.AllSale_MedianPrice + ' ('+ parseInt(match.AllSale_MedianPrice / (match.median_pay_per_LA_x2)) + ' times annual salary)'  + "<br>" +
-    // // match.AllRent_MedianPrice + ' (' + Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2)/12)) + '% of monthly salary)<br>' +
-    // // 'The majority of areas in this postcode district fall in the [xx?] local authority.'
-
-
-    //         let data = {
-    //             h2:'UK',
-    //             standfirst:"UK's staandfirst",
-    //             housePrice:null,
-    //             annualIncome:null,
-    //             rentPrice:null,
-    //             percentincome:null,
-    //             label:null,
-
-    //         }
-    //         table.setData(data)
         }
-
-        
     }
-
 }
 
 const nav = new Navigation({

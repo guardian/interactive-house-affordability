@@ -1,0 +1,29 @@
+.gv-form__income-wrapper{
+    display: flex;
+    flex-direction: column;
+    font-size: 17px;
+    font-weight: 700;
+    width: 100%;
+    height: 105px;
+
+    label{
+        color:#121212;
+        @include fs-textSans(3);
+        line-height: 135%;
+        margin-bottom: 4px;
+      }
+
+    #gv-salary-input{
+
+        min-height: 44px;
+        @include fs-textSans(3);
+        font-size: 17px;
+        color: #121212;
+    }
+
+    #gv-salary__error-mesage{
+        margin-top: 4px;
+        @include font(fs-textSans(3), 12, 18);
+        font-style: italic;
+    }
+}
