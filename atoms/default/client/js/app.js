@@ -5,6 +5,8 @@ import postcodes from 'assets/areas-codes.json'
 import dark from 'assets/gv-dark.json'
 import Expression from 'shared/js/components/Expression.js'
 import dataRaw from 'assets/sheet.json'
+import Table from "../../../../shared/js/components/Table";
+import Article from "../../../../shared/js/components/Article";
 
 import Form from 'shared/js/components/Form'
 
@@ -18,6 +20,21 @@ const bedroomsSelect = document.querySelector('#gv-bedrooms-input')
 const next = document.querySelector('#nextBtn')
 const prev = document.querySelector('#prevBtn')
 const tabs = document.querySelectorAll('.gv-tab')
+
+const articleHeader = document.querySelector('#gv-article-header')
+const articleParagraph = document.querySelector('#gv-article-paragraph')
+const tableTag = document.querySelector('#gv-table')
+
+const table = new Table({
+
+    table:tableTag
+
+})
+
+const article = new Article({
+    header:articleHeader,
+    paragraph:articleParagraph,
+})
 
 const buttonNames = [
     {step:0, button:next, name:'Start'},
@@ -48,12 +65,9 @@ const onMapLoaded = () => {
 
 const onMapMove = (event) => {
 
-    let match = data.find(f => f.Postcode_district === event.features[0].properties.PostDist);
+    let match = data.find(f => f.Postcode_District === event.features[0].properties.PostDist);
 
-    tooltip.innerHTML = event.features[0].properties.PostDist + ' | ' + event.features[0].properties.Sprawl + "<br>" +
-    match.Median_house_price + ' ('+ parseInt(match.Median_house_price / (match.median_pay_per_LA_x2)) + ' times annual salary)'  + "<br>" +
-    match.monthly_rent + ' (' + Math.round((match.monthly_rent * 100) / ((match.median_pay_per_LA_x2)/12)) + '% of monthly salary)<br>' +
-    'The majority of areas in this postcode district fall in the [xx?] local authority.'
+    tooltip.innerHTML = event.features[0].properties.PostDist + ' | ' + event.features[0].properties.Sprawl 
     
     tooltip.style.left = event.point.x + 20 + 'px'
     tooltip.style.top = event.point.y + 'px'
@@ -97,8 +111,8 @@ const onMapLeave = (event) => {
 
 const onMapClick = (event) => {
 
-    let match = data.find(f => f.Postcode_district === event.features[0].properties.PostDist);
-    map.setAreaSelected(match.Postcode_district)
+    let match = data.find(f => f.Postcode_District === event.features[0].properties.PostDist);
+    map.setAreaSelected(match.Postcode_District)
     map.zoomTo([match.x,match.y])
     map.highlightArea()
 
@@ -128,7 +142,7 @@ const searchOnResult = (result) => {
         if(result.value)
         {
             let selectedId = result.value.detail.selection.value.code
-            let match = data.find(d => d.Postcode_district === selectedId)
+            let match = data.find(d => d.Postcode_District === selectedId)
 
             map.setAreaSelected(selectedId)
             map.zoomTo([match.x,match.y])
@@ -140,7 +154,7 @@ const searchOnResult = (result) => {
         
     }
     else{
-        map.zoomTo(center)
+        map.reset()
     }
     
 }
@@ -158,7 +172,7 @@ new Search({
 
 const onNavChange = (step) => {
 
-    console.log(step)
+    console.log("step: ", step)
 
     tabs.forEach(tab => {
         tab.style.display = 'none'
@@ -175,7 +189,6 @@ const onNavChange = (step) => {
     names.forEach(n => {    
         nav.name(n.button,n.name)
         nav.show(n.button)
-
     })
 
     if(step == 0){
@@ -183,6 +196,13 @@ const onNavChange = (step) => {
         let expression = new Expression({data:data})
         map.paint(expression.getExpression())
         map.reset()
+        form.reset()
+        nav.enable(next)
+
+        article.setData({
+            header:'UK',
+            paragraph:`Map shows affordability for median_pay_per_LA_x2 income`
+        })
     }
 
     if(step == 1 && !form.getValid()){
@@ -196,22 +216,83 @@ const onNavChange = (step) => {
 
     if(step == 2){
 
-        if(form.salary.getSalary())
-        {
+        if(!map.getAreaSelected()){
 
-            let salary = form.salary.getSalary().value;
-            let rooms = form.rooms.getRooms().value;
+            if(form.salary.getSalary().value && form.rooms.getRooms().value)
+            {
+                let salary = form.salary.getSalary().value;
+                let rooms = form.rooms.getRooms().value;
 
-            let expression = new Expression({data:data, salary:salary, rooms:rooms})
-            map.paint(expression.getExpression())
+                let expression = new Expression({data:data, salary:salary, rooms:rooms})
+                map.paint(expression.getExpression())
 
-            console.log('UK results')
-            console.log("Map shows affordability to salary input and house with selected rooms (2 by default)")
+                tabs[0].style.display = 'block';
+                tabs[2].style.display = 'none';
+        
+                article.setData({
+                    header:'UK',
+                    paragraph:`Based on a household income of ${form.salary.getSalary().value} and ${form.rooms.getRooms().value} room${form.rooms.getRooms().value > 1 ? 's' : ''}, the following areas are judged to be affordable. Select an area to get more detail.`
+                })
+
+            }
 
         }
         else{
-            console.log("Postal district results")
-            console.log("Map shows median_pay_per_LA_x2")
+
+            let match = data.find(f => f.Postcode_District === map.getAreaSelected());
+            let area = map.getAreaSelected();
+            let salary = form.salary.getSalary().value;
+            let rooms = form.rooms.getRooms().value;
+            let housePrice = match[`${rooms}BedSale_MedianPrice`];
+            let houseRent = match[`${rooms}BedRent_MedianPrice`];
+
+            console.log(match)
+
+            if(form.salary.getSalary().value && form.rooms.getRooms().value){
+
+                tabs[2].style.display = 'block';
+                tabs[0].style.display = 'none';
+
+                table.setData({
+                    header:map.getAreaSelected(),
+                    standfirst:`Table shows affordability in ${area} for a ${salary} household income and ${rooms} rooms house`,
+                    housePrice:housePrice,
+                    annualIncome:parseInt(housePrice / salary) + ' times annual salary',
+                    rentPrice:match[`${rooms}BedRent_MedianPrice`],
+                    percentincome:Math.round((houseRent * 100) / ((salary)/12)) + '% of monthly salary',
+                    label:`The majority of areas in this postcode district fall in ${match.LA} local authority.`
+                })
+            }
+            else{
+
+                tabs[0].style.display = 'block';
+                tabs[2].style.display = 'none';
+
+                article.setData({
+                    header:map.getAreaSelected(),
+                    paragraph:`Article shows % of postal districts like ${map.getAreaSelected()} in same situation`
+                })
+
+            }
+
+            
+
+    //         match.AllSale_MedianPrice + ' ('+ parseInt(match.AllSale_MedianPrice / (match.median_pay_per_LA_x2)) + ' times annual salary)'  + "<br>" +
+    // // match.AllRent_MedianPrice + ' (' + Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2)/12)) + '% of monthly salary)<br>' +
+    // // 'The majority of areas in this postcode district fall in the [xx?] local authority.'
+
+
+    //         let data = {
+    //             h2:'UK',
+    //             standfirst:"UK's staandfirst",
+    //             housePrice:null,
+    //             annualIncome:null,
+    //             rentPrice:null,
+    //             percentincome:null,
+    //             label:null,
+
+    //         }
+    //         table.setData(data)
         }
 
         

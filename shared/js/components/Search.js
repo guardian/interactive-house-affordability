@@ -22,8 +22,6 @@ class Search{
 
     autoCompleteJs() {
 
-
-
         this.autoComplete = new autoComplete({
             selector: this.selector,
             placeHolder: this.placeHolder,
@@ -40,7 +38,7 @@ class Search{
        
                         if(this.errorMessage)this.errorMessage.innerHTML = 'No results'
                         if(this.callback)this.callback({type:'search', value:null})
-                        this.hideResetBtn()
+                        //this.hideResetBtn()
                     }
                     else{
                         if(this.errorMessage)this.errorMessage.innerHTML = ''
@@ -70,7 +68,7 @@ class Search{
 
             if(this.callback)this.callback(this.search)
 
-            this.hideResetBtn()
+            //this.hideResetBtn()
         })
 
         this.autoComplete.input.addEventListener("selection", (event) => {
@@ -102,7 +100,7 @@ class Search{
     reset(){
         this.search = null
         this.input.value = ''
-        this.hideResetBtn()
+        //this.hideResetBtn()
         this.callback()
     }
 

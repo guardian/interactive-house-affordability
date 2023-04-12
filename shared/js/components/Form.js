@@ -19,7 +19,6 @@ class Form{
 
         this.rooms = new Rooms({
             bedroomsSelect:this.bedroomsSelect,
-            default:2,
             callback:this.validateForm.bind(this)
         })
 
@@ -30,14 +29,10 @@ class Form{
         if(this.salary.getSalary()){
 
             if(this.salary.getSalary().value && this.rooms.getRooms().value){
-            
                 this.valid = true;
-    
             }
             else{
-    
                 this.valid = false;
-    
             }
 
         }
@@ -48,6 +43,7 @@ class Form{
 
     reset(){
         this.salaryInput.value = '';
+        this.valid = false;
         this.salary.reset()
         this.rooms.reset();
     }

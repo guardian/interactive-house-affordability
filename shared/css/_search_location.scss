@@ -1,16 +1,19 @@
-@import "autocomplete";
 @import "fonts";
 
 .gv-location{
-    max-width: 320px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
 }
 
-.gv-location__form::before{
+.gv-location__form{
     display: flex;
-    color: #bdbdbd;
+    flex-direction: column;
     font-size: 18px;
     float: left;
     padding: 8px 4px 0 6px;
+    right: 0px;
+    width: 100%;
 }
 
 .gv-location__input_wrapper{
@@ -18,15 +21,15 @@
 }
 
 #gv-autoComplete{
-    width: 100%;
     height: 30px;
+    width: 100%;
+    max-width: 392px;
     padding: 4px 10px 3px;
     border: 1px solid #bababa;
-    border-radius: 100px;
+    border-radius: 8px 8px 8px 8px;
     background: white;
     font-weight: normal;
 }
-
 
 textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:focus, option:focus{   
     border-color:none;
@@ -36,8 +39,6 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
 
 .gv-location-reset__btn{
     position: absolute;
-    top: 1px;
-    right: 1px;
     margin: 0;
     border: 0;
     border-radius: 100px;
@@ -45,11 +46,76 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
     padding: 0;
     color: #333;
     background: #eaeaea;
-    visibility: hidden;
-    width: 28px;
+    visibility: visible;
+    width: 100%;
     height: 28px;
 }
 
 .gv-location__label{
     @include fs-textSans(3);
+}
+
+#autoComplete,
+#map-autoComplete {
+    //position: absolute;
+    z-index: 100000;
+    width: 100%;
+    //max-width: 320px;
+    border: 0;
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    outline: 0;
+    text-overflow: ellipsis;
+}
+
+#autoComplete_list_1 {
+    
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background: #f6f6f6;
+    border-top: none;
+    width: 100%;
+    //max-width: 320px;
+    font-size: 16px;
+    line-height: 20px;
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    line-height: 28px;
+
+}
+
+.autoComplete_selected {
+    cursor: pointer;
+    background-color: #dcdcdc;
+}
+
+[role='option'] {
+    position: relative;
+    list-style: none;
+    text-align: left;
+    color: #212121;
+    //width: calc(100% - 51px);
+    //max-width: 460px;
+    //padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    background: #f6f6f6;
+}
+
+[role='option']:hover {
+    background-color: #dcdcdc;
+}
+
+.no_result {
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    line-height: 28px;
+    width: calc(100% - 51px);
+    max-width: 460px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 51px;
 }

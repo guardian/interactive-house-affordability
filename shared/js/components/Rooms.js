@@ -5,9 +5,7 @@ class Rooms{
         this.select = config.bedroomsSelect;
         this.callback = config.callback || null;
 
-        this.select.options[config.default-1].selected = true;
-
-        this.setRooms(config.default);
+        this.setRooms(0);
         
         this.select.addEventListener('change', (event) => {
             this.setRooms(this.select.value)
@@ -37,9 +35,10 @@ class Rooms{
     }
 
     reset(){
-        this.select.options[this.rooms-1].selected = false;
-        this.rooms = 2;
-        this.select.options[1].selected = true;
+        let value = this.getRooms().value ? +this.getRooms().value -1 : 0
+        this.select.options[value].selected = false;
+        this.select.options[value].classList.remove('selected')
+        this.setRooms(0);
     }
 
 }

@@ -1,12 +1,13 @@
 class Article{
 
-    constructor(){ 
+    constructor(config){
+        this.header = config.header
+        this.paragraph = config.paragraph
     }
 
-    show(){
-    }
-
-    hide(){
+    setData(data){
+        this.header.innerHTML = data.header
+        this.paragraph.innerHTML = data.paragraph
     }
 }
 

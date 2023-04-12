@@ -8,8 +8,9 @@ export async function render() {
     const sheet = await request({"uri":'https://interactive.guim.co.uk/docsdata-test/11SLL55WwROril-6407448VlmwpEBA28iAe8g95SjPUs.json', json:true});
     fs.writeFileSync(`assets/sheet.json`, JSON.stringify(sheet));
 
+    
     const listAreas = sheet.sheets.Master.map(d => d['Town/Area'].split(', '))
-    const listCodes = sheet.sheets.Master.map(d => d.Postcode_district)
+    const listCodes = sheet.sheets.Master.map(d => d.Postcode_District)
 
     let max = 0
     let arr 
@@ -23,9 +24,6 @@ export async function render() {
         }
 
     })
-
-    console.log(max,arr)
-
 
     const areasAndCodes = []
     

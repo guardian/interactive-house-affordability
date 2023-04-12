@@ -11,7 +11,7 @@ class Map{
         this.zoom = config.zoom;
         this.center = config.center;
         this.hoverId = null;
-        this.selectedId = null;
+
         this.tooltip = config.tooltip;
         this.onLoaded = config.onLoaded;
         this.onMove = config.onMove;
@@ -122,7 +122,7 @@ class Map{
     reset(){
 
         this.map.setFeatureState(
-            { source: 'vector-tiles', sourceLayer: 'PostalDistrict', id: this.selectedId },
+            { source: 'vector-tiles', sourceLayer: 'PostalDistrict', id: this.areaSelected },
             { hover: false }
         );
         

@@ -56,7 +56,7 @@ class Salary{
     }
 
     reset(){
-        this.salary = null
+        this.setSalary(null)
     }
 }
 
