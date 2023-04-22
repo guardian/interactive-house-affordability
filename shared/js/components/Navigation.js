@@ -24,6 +24,7 @@ class Navigation{
             this.hide(this.next)
         }
         else if(this.index <= 0){
+            console.log('nav = 0')
             this.index = 0;
             this.hide(this.prev)
         }
@@ -34,6 +35,11 @@ class Navigation{
 
         this.callback(this.index)
 
+    }
+
+    reset(){
+        this.index = 0;
+        this.prevNext(0)
     }
 
     enable(button){

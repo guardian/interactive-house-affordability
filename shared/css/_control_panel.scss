@@ -19,7 +19,11 @@
         left: 0;
         top: 0;
         width: 30%;
-        height: 100%;
+        height: unset;
+        min-height: 30%;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
     }
 
     padding: 22px;

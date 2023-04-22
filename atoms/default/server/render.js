@@ -6,37 +6,59 @@ import fs from "fs"
 export async function render() {
 
     const sheet = await request({"uri":'https://interactive.guim.co.uk/docsdata-test/11SLL55WwROril-6407448VlmwpEBA28iAe8g95SjPUs.json', json:true});
-    fs.writeFileSync(`assets/sheet.json`, JSON.stringify(sheet));
 
-    
-    const listAreas = sheet.sheets.Master.map(d => d['Town/Area'].split(', '))
-    const listCodes = sheet.sheets.Master.map(d => d.Postcode_District)
+    console.log(sheet.sheets.Master)
+    fs.writeFileSync(`assets/sheet.json`, JSON.stringify(sheet.sheets.Master));
 
-    let max = 0
-    let arr 
 
-    listAreas.forEach(a => {
+    //const listCodes = sheet.sheets.Master.map(d => d.Postcode_District)
+    //const listAreas = sheet.sheets.Master.map(d => d['Town/Area'])
 
-        if(a.length > max)
-        {
-            max = a.length
-            arr = a
-        }
+    const areasCodes = []
 
-    })
-
-    const areasAndCodes = []
-    
-    listAreas.forEach((element,i) => {
-
-        element.forEach(el => {
-            
-            let row = areasAndCodes.push({area:el, areaCode:listCodes[i] + ' | ' + el, code: listCodes[i]}) 
-        })
+    sheet.sheets.Master.forEach(element => {
         
+        areasCodes.push(
+            {
+                code:element.Postcode_District,
+                areas:element['Town/Area'],
+                codesAreas:element.Postcode_District + ' | ' + element['Town/Area']
+            }
+        )
+
     });
 
-    fs.writeFileSync(`assets/areas-codes.json`, JSON.stringify(areasAndCodes));
+    fs.writeFileSync(`assets/codes.json`, JSON.stringify(areasCodes));
+
+    
+    // const listAreas = sheet.sheets.Master.map(d => d['Town/Area'].split(', '))
+    // const listCodes = sheet.sheets.Master.map(d => d.Postcode_District)
+
+    // let max = 0
+    // let arr 
+
+    // listAreas.forEach(a => {
+
+    //     if(a.length > max)
+    //     {
+    //         max = a.length
+    //         arr = a
+    //     }
+
+    // })
+
+    // const areasAndCodes = []
+    
+    // listAreas.forEach((element,i) => {
+
+    //     element.forEach(el => {
+            
+    //         let row = areasAndCodes.push({area:el, areaCode:listCodes[i] + ' | ' + el, code: listCodes[i]}) 
+    //     })
+        
+    // });
+
+    // fs.writeFileSync(`assets/areas-codes.json`, JSON.stringify(areasAndCodes));
 
     return mainHTML;
 } 

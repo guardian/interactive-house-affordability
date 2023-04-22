@@ -10,7 +10,7 @@
         "vector-tiles": {
             "type": "vector",
             "tiles": [
-                "https://interactive.guim.co.uk/maptiles/postal-districts/{z}/{x}/{y}.pbf"
+                "https://interactive.guim.co.uk/maptiles/postal-districts-bb/{z}/{x}/{y}.pbf"
             ],
             "promoteId": "PostDist"
         }
@@ -81,7 +81,7 @@
             "id": "postal-districts",
             "type": "fill",
             "source": "vector-tiles",
-            "source-layer": "PostalDistrict",
+            "source-layer": "PostalDistrictwgs84bb",
             "paint": {
               "fill-color": "#dadada"
             }
@@ -90,12 +90,28 @@
             "id": "postal-districts-stroke",
             "type": "line",
             "source": "vector-tiles",
-            "source-layer": "PostalDistrict",
+            "source-layer": "PostalDistrictwgs84bb",
             "paint": {
                 "line-color":"#000",
                 "line-opacity": [
                     "case",
                     ["boolean", ["feature-state", "hover"], false],
+                    1,
+                    0
+                    ],
+                "line-width":2
+            }
+        },
+        {
+            "id": "postal-districts-stroke-clicked",
+            "type": "line",
+            "source": "vector-tiles",
+            "source-layer": "PostalDistrictwgs84bb",
+            "paint": {
+                "line-color":"#000",
+                "line-opacity": [
+                    "case",
+                    ["boolean", ["feature-state", "clicked"], false],
                     1,
                     0
                     ],

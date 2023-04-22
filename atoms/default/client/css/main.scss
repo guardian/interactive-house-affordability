@@ -2,7 +2,7 @@
 @import "fonts";
 @import "mq";
 @import "palette";
-@import "dcr_enhancer"; // default left column enhancer, works with inline, showcase and immersive weighting
+//@import "dcr_enhancer"; // default left column enhancer, works with inline, showcase and immersive weighting
 @import "full_immersive_enhancer"; // full-width enhancer, to be used with immersive weighting. Removes left colum, sets 100vw atom width at any breakpoint
 // @import "darkmodedefault"; // basic media queries for adding dark mode and several default colours
 @import "search_location";
@@ -66,12 +66,6 @@
     position: absolute;
     left: -100vh;
     background-color: #fff;
-}
-
-.gv-location{
-    position: absolute;
-    min-width: 320px;
-    right:0;
 }
 
 table {

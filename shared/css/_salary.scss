@@ -26,4 +26,9 @@
         @include font(fs-textSans(3), 12, 18);
         font-style: italic;
     }
+
+    #gv-salary-input__wrapper{
+        display: flex;
+        flex-direction: row;
+    }
 }

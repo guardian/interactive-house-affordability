@@ -1,7 +1,7 @@
 class Article{
 
     constructor(config){
-        
+
         this.header = config.article.querySelector('#gv-article-header')
         this.paragraph = config.article.querySelector('#gv-article-paragraph')
     }
@@ -13,3 +13,5 @@ class Article{
 }
 
 export default Article
+
+

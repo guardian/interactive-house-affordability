@@ -37,7 +37,7 @@ class Salary{
             if(this.validate(this.stripValue))
             {
                 this.setSalary(this.stripValue);
-                this.input.value = numberWithCommas(this.salary.value);
+                this.input.value = "£" + numberWithCommas(this.salary.value);
                 this.callback()
             }
             else{

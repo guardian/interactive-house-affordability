@@ -27,13 +27,17 @@ class Search{
             placeHolder: this.placeHolder,
             data: {
                 src: this.data,
-                keys: this.keys
+                keys: this.keys,
             },
             resultItem: {
                 highlight: true,
             },
             resultsList: {
+                tag: "ul",
+                position: "afterend",
+                tabSelect:true,
                 element: (list, data) => {
+                    console.log(list)
                     if (!data.results.length) {
        
                         if(this.errorMessage)this.errorMessage.innerHTML = 'No results'
@@ -45,10 +49,11 @@ class Search{
                     }
                 },
                 noResults: true,
-                maxResults: 10
+                maxResults:5
             },
             resultItem: {
                 element: (item, data) => {
+                    //console.log('automcomplete', item)
                     //this.callback({type:'search', value:data})
                 },
                 highlight: {
@@ -73,7 +78,7 @@ class Search{
 
         this.autoComplete.input.addEventListener("selection", (event) => {
 
-            this.input.value = event.detail.selection.value.areaCode
+            this.input.value = event.detail.selection.value.code
 
             this.search = {type:'search', value:event};
             
@@ -100,8 +105,13 @@ class Search{
     reset(){
         this.search = null
         this.input.value = ''
-        //this.hideResetBtn()
+        this.hideResetBtn()
         this.callback()
+        this.autoComplete.data.src = this.data;
+    }
+
+    clean(){
+        this.input.value = ''
     }
 
     disable(){
