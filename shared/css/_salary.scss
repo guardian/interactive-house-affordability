@@ -15,6 +15,7 @@
 
     #gv-salary-input{
 
+        padding: 4px 10px 3px;
         min-height: 44px;
         @include fs-textSans(3);
         font-size: 17px;
@@ -22,8 +23,10 @@
     }
 
     #gv-salary__error-mesage{
+
         margin-top: 4px;
-        @include font(fs-textSans(3), 12, 18);
+        @include fs-textSans(3);
+        font-weight: 500;
         font-style: italic;
     }
 

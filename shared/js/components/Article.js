@@ -4,6 +4,7 @@ class Article{
 
         this.header = config.article.querySelector('#gv-article-header')
         this.paragraph = config.article.querySelector('#gv-article-paragraph')
+        this.colorScale = config.colorScale || null
     }
 
     setData(data){

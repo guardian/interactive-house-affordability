@@ -1,7 +1,7 @@
 <div id="gv-wrapper">
     <div class="gv-location">
         <form class="gv-location__form">
-            <span class="gv-location__label">Select your own area</span>
+            <!-- <span class="gv-location__label">Select your area</span> -->
             <div class="gv-location__input_wrapper">
                 <div class="gv-location__input">
                     <input id="gv-autoComplete" type="text" dir="ltr" spellcheck="false" autocorrect="off" autocomplete="off" autocapitalize="none" maxlength="4" tabindex="1" role="combobox" aria-haspopup="true" aria-expanded="false" aria-controls="autoComplete_list" aria-autocomplete="both" placeholder="Start typing a postcode">
@@ -16,12 +16,14 @@
     </div>
     <div id="gv-map"></div>
     <div id="gv-map-tooltip"></div>
-    <div id="scroll-message">Use command + scroll to zoom in</div>
-    <div id="scroll-message-mobile">Use two fingers to move the map</div>
+    <div id="scroll-message">
+        <div class="scroll-message-bg"></div>
+        <p></p>
+    </div>
     <div id="gv-control-panel">
         <div class="gv-results-wrapper">
             <article id="gv-article" class="gv-tab">
-                <div id="gv-article-header"></div>
+                <h4 id="gv-article-header"></h4>
                 <p id="gv-article-paragraph"></p>
             </article>
             <form id="gv-form" class="gv-tab">
@@ -32,12 +34,19 @@
                 </div>
                 <div class="gv-form__bedrooms-wrapper">
                     <label>Select number of rooms</label>
-                    <select id="gv-bedrooms-input" name="number-of-bedrooms" multiple="" autocomplete="off">
+                    <div id="gv-bedrooms-input">
+                        <button>1</button>
+                        <button>2</button>
+                        <button>3</button>
+                        <button>4</button>
+                    </div>
+                      
+                    <!-- <select id="gv-bedrooms-input" name="number-of-bedrooms" multiple="none" autocomplete="off">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
                         <option value="4">4</option>
-                    </select>
+                    </select> -->
                 </div>
             </form>
             <div id="gv-table" class="gv-tab">

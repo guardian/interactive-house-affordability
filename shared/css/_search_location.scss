@@ -1,62 +1,93 @@
 @import "fonts";
 
-.gv-location{
+.gv-location {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     position: absolute;
     justify-content: space-between;
-    padding: 18px 5px 0 15px;
+    min-width: 392px;
+    //padding: 18px 5px 0 15px;
+
+    @include mq($until:tablet) {
+        flex-direction: column;
+
+    }
 }
 
-.gv-location__form{
+    
+
+.gv-location__form {
     display: flex;
     flex-direction: column;
     font-size: 18px;
     float: left;
-    //padding: 8px 4px 0 6px;
     right: 0px;
-    //width: 100%;
-    //max-width:392px;
+    border-radius: 6px;
+    padding: 8px 12px 8px 12px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
+    min-width: 392px;
+    margin: 8px 8px 0 0;
+
+    @include mq($until:tablet) {
+        width: 100%;
+    }
+
+
 }
 
-.gv-location__input_wrapper{
+.gv-location__input_wrapper {
     position: relative;
     display: flex;
-    max-width: 390px;
+    
 
-    .autoComplete_wrapper{
-        min-width:392px;
-    }
-    svg{
+    svg {
         position: absolute;
         right: 3px;
-        top: 3px;
-        path{
+        top: 9px;
+
+        path {
             fill: #b4b4b4;
         }
-        
+
     }
 }
 
-#gv-autoComplete{
-    height: 30px;
+#gv-autoComplete {
+
+    @include fs-textSans(3);
+    font-size: 17px;
+    color: #121212;
+
+    height: 44px;
     width: 100%;
     max-width: 392px;
-    padding: 4px 10px 3px;
-    border: 1px solid #bababa;
-    border-radius: 8px 8px 8px 8px;
+    //padding: 4px 10px 3px;
+    border: 0px;// solid #bababa;
     background: white;
     font-weight: normal;
 }
 
-textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:focus, option:focus{   
-    border-color:none;
+#gv-location__error-mesage {
+    margin-top: 4px;
+    @include fs-textSans(3);
+    font-weight: 500;
+    font-style: italic;
+}
+
+textarea:focus,
+input:focus,
+input[type]:focus,
+.uneditable-input:focus,
+select:focus,
+option:focus {
+    border-color: none;
     box-shadow: none;
     outline: 0 none;
 }
 
-.gv-location-reset__btn{
+.gv-location-reset__btn {
 
     @include fs-textSans(3);
     font-size: 17px;
@@ -66,14 +97,23 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
     border: 0;
     width: 165px;
     height: 44px;
-    background-color: #052962;
-    outline:none;
+    background-color: #000;
+    outline: none;
     visibility: hidden;
+    margin: 8px 0 0 8px;
     //align-self :center;
+
+    @include mq($until:tablet) {
+        margin-top: 12px;
+    }
 }
 
-.gv-location__label{
+.gv-location__label {
+    color: #121212;
     @include fs-textSans(3);
+    line-height: 135%;
+    margin-bottom: 4px;
+    font-weight: 700;
 }
 
 #autoComplete,
@@ -81,7 +121,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
     //position: absolute;
     z-index: 100000;
     width: 100%;
-    max-width:392px;
+    max-width: 392px;
     border: 0;
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
@@ -92,14 +132,14 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
 }
 
 #autoComplete_list_1 {
-    
+
     padding: 0;
     margin: 0;
     list-style-type: none;
-    background: #f6f6f6;
+    background: #ffffff;
     border-top: none;
     width: 100%;
-    max-width:392px;    
+    min-width: 392px;
     font-size: 16px;
     line-height: 20px;
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -109,7 +149,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
 
 .autoComplete_selected {
     cursor: pointer;
-    background-color: #dcdcdc;
+    background-color: #bababa;
 }
 
 [role='option'] {
@@ -117,16 +157,14 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
     list-style: none;
     text-align: left;
     color: #212121;
-    //width: calc(100% - 51px);
-    max-width:392px;
-    //padding-top: 5px;
+    min-width: 392px;
     padding-bottom: 5px;
     padding-left: 5px;
-    background: #f6f6f6;
+    background: #ffffff;
 }
 
 [role='option']:hover {
-    background-color: #dcdcdc;
+    background-color: #f6f6f6;
 }
 
 .no_result {
@@ -135,7 +173,7 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus, select:
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     line-height: 28px;
     width: calc(100% - 51px);
-    max-width:392px;
+    max-width: 392px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 51px;

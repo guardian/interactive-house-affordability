@@ -1,3 +1,7 @@
+import { scaleThreshold } from 'd3-scale';
+
+
+
 class Expression {
 
     constructor(config) {
@@ -68,6 +72,15 @@ class Expression {
 
     }
 
+    palette(d) {
+
+        const scale = scaleThreshold()
+        .range(['#c70000', '#e06800', '#f0a900', '#ffe500', '#78bba2', '#377761', '#003825'])
+        .domain([0,1,2,3,4,5,6]);
+
+        return scale(d)
+    }
+
     getColor = (salary, sale_price, rent_price, use) => {
 
         let color;
@@ -81,31 +94,33 @@ class Expression {
             return '#dadada'
         }
         else if (rent_price <= ((salary / 12) * 0.3) && sale_price * 0.9 <= salary * 2.5) {
-            return '#056DA1'
+            return this.palette(5)
         }
         else if (rent_price <= ((salary / 12) * 0.3) && sale_price * 0.9 > salary * 2.5 && sale_price * 0.9 <= salary * 3.5) {
-            return '#1896D7'
+            return this.palette(4)
         }
         else if (rent_price <= ((salary / 12) * 0.3) && sale_price * 0.9 > salary * 3.5 && sale_price * 0.9 <= salary * 4.5) {
-            return '#E6F5FF'
+            return this.palette(3)
         }
         else if (sale_price * 0.9 > salary * 4.5 && rent_price <= (salary / 12) * 0.2) {
-            return '#ffbac8'
+            return this.palette(1)
         }
         else if (sale_price * 0.9 > salary * 4.5 && rent_price > (salary / 12) * 0.2 && rent_price <= ((salary / 12) * 0.3)) {
-            return '#c70000'
+            return this.palette(0)
         }
         else if (sale_price * 0.9 > salary * 4.5 && rent_price > ((salary / 12) * 0.3)) {
-            return '#880105'
+            return this.palette(-1)
         }
         else if (sale_price * 0.9 <= salary * 4.5 && rent_price > ((salary / 12) * 0.3)) {
-            return '#ffe500'
+            return this.palette(2)
         }
         else {
             return '#dadada'
         }
 
     }
+
+    
 
     getExpression() {
         return this.matchExpression

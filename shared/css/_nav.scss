@@ -16,10 +16,14 @@
     font-weight: 700;
     color: white;
     border-radius: 30px;
+    border-color:none;
+    box-shadow: none;
+    outline: 0 none;
     border: 0;
-    width: 165px;
+    min-width: 165px;
+    padding: 13px;
     height: 44px;
-    background-color: #052962;
+    background-color: #000;
 
     outline:none;
 
@@ -29,14 +33,23 @@
 
 #nextBtn:disabled,
 #nextBtn[disabled]{
-    background-color: #506991;
+    background-color: #666666;
+    border-color:none;
+    box-shadow: none;
+    outline: 0 none;
 }
 
 .prevBtn{
     outline:none;
+    border-color:none;
+    box-shadow: none;
+    outline: 0 none;
 }
 
 #nextBtn{
     outline:none;
+    border-color:none;
+    box-shadow: none;
+    outline: 0 none;
 
 }

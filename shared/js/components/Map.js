@@ -11,9 +11,10 @@ class Map {
         this.zoom = config.zoom;
         this.center = config.center;
         this.interactive = config.interactive;
+        this.layer = config.layer;
         this.hoverId = null;
         this.clickedId = null;
-
+        this.scrollMessage = config.scrollMessage;
         this.tooltip = config.tooltip;
         this.onLoaded = config.onLoaded;
         this.onMove = config.onMove;
@@ -23,7 +24,10 @@ class Map {
         this.bin = []
         this.isLoaded = false;
 
+        this.interval = null;
+
         this.map = new mapGl({
+
             container: this.container, // container id
             style: this.style,
             zoom: this.zoom,
@@ -31,44 +35,47 @@ class Map {
             interactive: this.interactive,
             maxZoom: 10,
             maxBounds: this.maxBounds,
-            //boxZoom:true
 
         });
-
-        //this.zoomTo(this.maxBounds)
 
         this.source = this.map.getSource('vector-tiles');
 
         this.map.on("wheel", event => { this.onWheel(event) })
         this.map.on("load", (event) => { this.onLoaded(); this.isLoaded = true })
-        this.map.on('mousemove', 'postal-districts', (event) => { this.onMove(event) })
-        this.map.on('mouseenter', 'postal-districts', (event) => { this.onEnter(event) })
-        this.map.on('mouseleave', 'postal-districts', (event) => { this.onLeave(event) })
-        this.map.on('click', 'postal-districts', (event) => {
+        this.map.on('mousemove', this.layer, (event) => { this.onMove(event) })
+        this.map.on('mouseenter', this.layer, (event) => { this.onEnter(event) })
+        this.map.on('mouseleave', this.layer, (event) => { this.onLeave(event) })
+        this.map.on('click', this.layer, (event) => {
             this.setAreaSelected(event.features[0].properties.PostDist)
             this.onClick(event)
         })
     }
 
     onWheel(event) {
-
-        console.log('on wheel')
-
-        //TODO: Display scroll mesagge
-
+        
         if (event.originalEvent.ctrlKey) {
             return;
         }
-
+    
         if (event.originalEvent.metaKey) {
             return;
         }
-
+    
         if (event.originalEvent.altKey) {
             return;
         }
-
+    
         event.preventDefault();
+    
+        this.scrollMessage.classList.add("show");
+    
+        if(!this.interval)
+        {
+            this.interval = setInterval(() => {
+                this.scrollMessage.classList.remove("show");
+            }, 1000);
+        }
+        
 
     }
 
@@ -77,8 +84,6 @@ class Map {
     }
 
     highlightArea(id, method) {
-
-        console.log(id, 'highlight', this.getAreaSelected())
 
         if(id) {
 
@@ -96,6 +101,11 @@ class Map {
                     { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bb', id: this.clickedId },
                     { clicked: true }
                 );
+
+                if (this.areaSelected != this.bin[0]) {
+                    this.clean()
+                    this.bin.push(this.areaSelected)
+                }
             }
             else {
                 if (this.hoverId) {
@@ -134,10 +144,6 @@ class Map {
             padding: {top: 100, bottom:100, left: 100, right: 100}
         });
 
-        if (this.areaSelected != this.bin[0]) {
-            this.clean()
-            this.bin.push(this.areaSelected)
-        }
 
     }
 
@@ -146,10 +152,11 @@ class Map {
         this.bin.forEach(id => {
             this.map.setFeatureState({
                 source: 'vector-tiles',
-                sourceLayer: 'PostalDistrict',
+                sourceLayer: 'PostalDistrictwgs84bb',
                 id: id,
             }, {
-                hover: false
+                clicked: false,
+                hover:false
             });
         })
 
@@ -174,7 +181,7 @@ class Map {
             essential: true
         });
 
-        this.setAreaSelected(null)
+        //this.setAreaSelected(null)
     }
 
     getMap() {

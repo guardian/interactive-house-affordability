@@ -2,34 +2,45 @@
 @import "fonts";
 
 .gv-form__bedrooms-wrapper{
-  display: flex;
-  flex-direction: column;
   font-size: 17px;
   font-weight: 700;
   width: 100%;
+  
+  display: flex;
+  flex-wrap: wrap;
 
   label{
     color:#121212;
     @include fs-textSans(3);
     line-height: 135%;
     margin-bottom: 4px;
+    width: 100%;
   }
 }
 
 #gv-bedrooms-input{
-  border: none;
-  overflow: hidden;
-  border-color:none;
-  box-shadow: none;
-  outline: 0 none;
-  max-height: 45px;
-  list-style: none;
+
+  width: 100%;
+  justify-content:space-between;
   
-  option:checked{
-    color: #052962;
-    border: #0077B6 solid 1px;
-    background-color: #E3F6FF;
-  }
+  button{
+    border: none;
+    overflow: hidden;
+    border-color:none;
+    box-shadow: none;
+    outline: 0 none;
+    max-height: 45px;
+    list-style: none;
+
+    width: 80px;
+    height: 45px;
+
+    &.selected{
+      color: #052962;
+      border: #0077B6 solid 1px;
+      background-color: #E3F6FF;
+    }
+  } 
 
 }
 
