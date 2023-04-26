@@ -220,6 +220,14 @@ const onNavChange = (step) => {
     if (step == 0) {
 
         let expression = new Expression({ data: data })
+        console.log(expression.matchExpression.slice(2), expression.scale.range())
+
+        expression.scale.range().forEach(color => {
+            console.log(color, expression.matchExpression.slice(2).reduce((total,x) => (x==color ? total+1 : total), 0))
+        })
+
+        
+
         map.paint(expression.getExpression())
         map.reset()
         map.clean()
