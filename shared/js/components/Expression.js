@@ -10,6 +10,9 @@ class Expression {
         this.salary = config.salary || null;
         this.rooms = config.rooms || 2;
         this.matchExpression = ["match", ["get", "PostDist"]];
+        this.scale = scaleThreshold()
+        .range(['#c70000', '#e06800', '#f0a900', '#ffe500', '#78bba2', '#377761', '#003825'])
+        .domain([0,1,2,3,4,5,6]);
 
         if(this.salary && this.rooms) {
 
@@ -74,11 +77,7 @@ class Expression {
 
     palette(d) {
 
-        const scale = scaleThreshold()
-        .range(['#c70000', '#e06800', '#f0a900', '#ffe500', '#78bba2', '#377761', '#003825'])
-        .domain([0,1,2,3,4,5,6]);
-
-        return scale(d)
+        return this.scale(d)
     }
 
     getColor = (salary, sale_price, rent_price, use) => {
