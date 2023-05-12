@@ -47,10 +47,19 @@
 
     #gv-article-paragraph{
         font-family: "Guardian Text Egyptian Web",Georgia,serif;
-        font-size: 17px;
-        line-height: 24px;
+        font-size: 15px;
+        line-height: 21px;
         font-weight: 300;
-        //margin-bottom: 120px;
+        margin-bottom: 12px;
+
+        @include mq(desktop){
+            margin-bottom: 120px;
+            font-size: 17px;
+            line-height: 23px;
+        }
+        
+
+
 
     }
 

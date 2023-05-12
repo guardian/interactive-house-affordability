@@ -8,9 +8,9 @@ import dataRaw from 'assets/sheet.json'
 import Table from "../../../../shared/js/components/Table";
 import Article from "../../../../shared/js/components/Article";
 import Form from 'shared/js/components/Form';
-import Colorkey from "shared/js/components/Colorkey";
 import {numberWithCommas} from 'shared/js/util'
-const colorkey = new Colorkey({})
+
+const platform = window.navigator.platform
 
 const isMobile = window.matchMedia('(max-width: 600px)').matches;
 const width = document.documentElement.clientWidth;
@@ -28,7 +28,7 @@ const tabs = document.querySelectorAll('.gv-tab')
 const scrollMessage = document.querySelector('#scroll-message');
 const hide = document.querySelector('.gv-hide-panel')
 const panel = document.querySelector('#gv-control-panel')
-scrollMessage.querySelector('p').innerHTML = isMobile ? 'Use two fingers to move the map':'Use command + scroll to zoom in'
+scrollMessage.querySelector('p').innerHTML = isMobile ? 'Use two fingers to move the map':`Use ${platform == 'MacIntel' ? '⌘' : 'control'} + scroll to zoom in`
 
 const articleTag = document.querySelector('#gv-article')
 const tableTag = document.querySelector('#gv-table')
@@ -238,7 +238,6 @@ const onNavChange = (step) => {
     if (step == 0) {
 
         let expression = new Expression({ data: data })
-        console.log(expression.getExpression())
         map.paint(expression.getExpression())
         map.reset()
         map.clean()
@@ -248,7 +247,7 @@ const onNavChange = (step) => {
 
         article.setData({
             header: 'Where can you afford to buy or rent in Britain?',
-            paragraph: `This map currently compares an area’s house prices against the average income of local residents. Compare them against your own household here.`
+            paragraph: `This map currently compares an area’s house prices against the average income of local residents. Compare them against your own household here. Click on a postcode district to see each area’s average house prices compared with the typical income of local residents. Or compare with your own household income below`
         })
     }
 
@@ -264,13 +263,9 @@ const onNavChange = (step) => {
     if (step == 2) {
 
         let area = map.getAreaSelected();
-        console.log('app',area)
         let match = data.find(f => f.Postcode_District === area);
         let salary = form.salary.getSalary().value;
         let rooms = form.rooms.getRooms().value;
-
-        console.log(match)
-
 
         if (!area) {
             console.log("no area selected")
@@ -284,21 +279,6 @@ const onNavChange = (step) => {
                     paragraph: `Based on a household income of ${numberWithCommas(salary)} and ${rooms} room${rooms > 1 ? 's' : ''}, the following areas are considered affordable. Select an area to get more detail.`
                 })
             }
-            // else {
-            //     console.log("neither salary nor rooms selected")
-            //     tabs[0].style.display = 'none';
-            //     tabs[2].style.display = 'block';
-
-            //     table.setData({
-            //         header: area,
-            //         standfirst: `Table shows affordability in ${area} for a ${'£', match.median_pay_per_LA_x2} median pay`,
-            //         housePrice: match.AllSale_MedianPrice,
-            //         annualIncome: parseInt(match.AllSale_MedianPrice / match.median_pay_per_LA_x2) + ' times annual salary',
-            //         rentPrice: match.AllRent_MedianPrice,
-            //         percentincome: Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2) / 12)) + '% of monthly salary',
-            //         label: `The majority of areas in this postcode district fall in ${match.LA} local authority.`
-            //     })
-            // }
         }
         else {
 
@@ -320,7 +300,7 @@ const onNavChange = (step) => {
                     annualIncome: numberWithCommas((housePrice / salary).toFixed(1)) + ' times annual salary',
                     rentPrice: '£' + numberWithCommas(match[`${rooms}BedRent_MedianPrice`]),
                     percentincome: Math.round((houseRent * 100) / ((salary) / 12)) + '% of monthly salary',
-                    label: `The majority of areas in this postcode district fall in ${match.LA} local authority.`
+                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area.`
                 })
             }
             else {
@@ -336,7 +316,7 @@ const onNavChange = (step) => {
                     annualIncome: numberWithCommas((match.AllSale_MedianPrice / match.median_pay_per_LA_x2).toFixed(1)) + ' times annual salary',
                     rentPrice: '£' + numberWithCommas(match.AllRent_MedianPrice),
                     percentincome: Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2) / 12)) + '% of monthly salary',
-                    label: `The majority of areas in this postcode district fall in ${match.LA} local authority.`
+                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area.`
                 })
 
                 nav.name(prev, 'Insert your data')

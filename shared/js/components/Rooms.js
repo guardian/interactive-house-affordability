@@ -15,11 +15,6 @@ class Rooms{
                 event.preventDefault();
             })
         });
-        
-        // this.select.addEventListener('change', (event) => {
-        //     this.setRooms(this.select.value)
-        //     this.onSelect(this.select.value)
-        // })
 
     }
 
@@ -44,10 +39,12 @@ class Rooms{
     }
 
     reset(){
-        // let value = this.getRooms().value ? +this.getRooms().value -1 : 0
-        // this.select.options[value].selected = false;
-        // this.select.options[value].classList.remove('selected')
-        // this.setRooms(0);
+
+        for(let i = 0; i < this.select.querySelectorAll('button').length; i++){
+
+            this.select.querySelectorAll('button')[i].classList.remove('selected')
+        }
+        this.setRooms(0);
     }
 
 }
