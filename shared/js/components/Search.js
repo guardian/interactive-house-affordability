@@ -51,12 +51,10 @@ class Search{
                 position: "afterend",
                 tabSelect:true,
                 element: (list, data) => {
-                    console.log(list)
+
                     if (!data.results.length) {
-       
                         if(this.errorMessage)this.errorMessage.innerHTML = 'Only enter the first part of postcode (e.g. N1)'
                         if(this.callback)this.callback({type:'search', value:null})
-                        //this.hideResetBtn()
                     }
                     else{
                         if(this.errorMessage)this.errorMessage.innerHTML = ''
@@ -67,7 +65,6 @@ class Search{
             },
             resultItem: {
                 element: (item, data) => {
-                    //console.log('automcomplete', item)
                     this.callback({type:'search', value:data})
                 },
                 highlight: {
@@ -82,14 +79,15 @@ class Search{
             resultItem: {highlight:true}
         });
 
-        // this.autoComplete.input.addEventListener('navigate', (event) => {
-        //     console.log(event)
-        // })
 
         this.autoComplete.input.addEventListener('input', (event) => {
 
-            let key = event.input;
+            let key = event.data;
+
+            console.log(event)
+
             if (key === ' ') {
+                console.log('prevent default')
                 event.preventDefault();
             }
             
