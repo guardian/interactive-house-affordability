@@ -81,15 +81,6 @@ class Search{
 
 
         this.autoComplete.input.addEventListener('input', (event) => {
-
-            let key = event.data;
-
-            console.log(event)
-
-            if (key === ' ') {
-                console.log('prevent default')
-                event.preventDefault();
-            }
             
             this.search = {type:'search', value:null};
 
