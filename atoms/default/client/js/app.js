@@ -47,7 +47,7 @@ const buttonNames = [
     { step: 2, button: prev, name: 'Insert your data' },
 ]
 
-const searchInput = document.querySelector('#gv-autoComplete')
+const searchInput = document.querySelector('#gv-search-box')
 
 const placeHolder = 'Enter postcode'
 const searchErrorMessage = document.querySelector('#gv-location__error-mesage');
@@ -204,7 +204,7 @@ const searchOnResult = (result) => {
 }
 
 const search = new Search({
-    selector: '#gv-autoComplete',
+    selector: '#gv-search-box',
     placeHolder: placeHolder,
     data: codes,
     errorMessage: searchErrorMessage,
