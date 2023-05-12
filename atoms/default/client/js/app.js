@@ -339,7 +339,7 @@ const onNavChange = (step) => {
                     label: `The majority of areas in this postcode district fall in ${match.LA} local authority.`
                 })
 
-                nav.name(prev, 'Back')
+                nav.name(prev, 'Insert your data')
                 //nav.reset()
 
             }
