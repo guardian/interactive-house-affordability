@@ -2,22 +2,22 @@
 
 .gv-location {
     width: 100%;
+    height:auto;
     display: flex;
     flex-direction: row-reverse;
     position: absolute;
     justify-content: space-between;
-    min-width: 392px;
-    //padding: 18px 5px 0 15px;
-
     @include mq($until:tablet) {
         flex-direction: column;
 
     }
+    z-index: 2;
 }
 
     
 
 .gv-location__form {
+    min-width: 330px;
     display: flex;
     flex-direction: column;
     font-size: 18px;
@@ -27,20 +27,21 @@
     padding: 8px 12px 8px 12px;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
-    min-width: 392px;
     margin: 8px 8px 0 0;
 
     @include mq($until:tablet) {
-        width: 100%;
+        margin: 0;
     }
 
 
+}
+.gv-location__input{
+    width: 100%;
 }
 
 .gv-location__input_wrapper {
     position: relative;
     display: flex;
-    
 
     svg {
         position: absolute;
@@ -59,11 +60,7 @@
     @include fs-textSans(3);
     font-size: 17px;
     color: #121212;
-
     height: 44px;
-    width: 100%;
-    max-width: 392px;
-    //padding: 4px 10px 3px;
     border: 0px;// solid #bababa;
     background: white;
     font-weight: normal;
@@ -100,6 +97,7 @@ option:focus {
     background-color: #000;
     outline: none;
     visibility: hidden;
+    min-height: 44px;
     margin: 8px 0 0 8px;
     //align-self :center;
 
@@ -120,8 +118,6 @@ option:focus {
 #map-autoComplete {
     //position: absolute;
     z-index: 100000;
-    width: 100%;
-    max-width: 392px;
     border: 0;
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
@@ -138,8 +134,6 @@ option:focus {
     list-style-type: none;
     background: #ffffff;
     border-top: none;
-    width: 100%;
-    min-width: 392px;
     font-size: 16px;
     line-height: 20px;
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -157,7 +151,6 @@ option:focus {
     list-style: none;
     text-align: left;
     color: #212121;
-    min-width: 392px;
     padding-bottom: 5px;
     padding-left: 5px;
     background: #ffffff;
@@ -172,9 +165,11 @@ option:focus {
     line-height: 20px;
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     line-height: 28px;
-    width: calc(100% - 51px);
-    max-width: 392px;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 51px;
 }
+
+li[aria-selected="true"] {
+    background-color: #f6f6f6;
+  }

@@ -8,13 +8,15 @@ class Expression {
         
         this.data = config.data;
         this.salary = config.salary || null;
-        this.rooms = config.rooms || 2;
+        this.rooms = config.rooms || null;
         this.matchExpression = ["match", ["get", "PostDist"]];
         this.scale = scaleThreshold()
         .range(['#c70000', '#e06800', '#f0a900', '#ffe500', '#78bba2', '#377761', '#003825'])
         .domain([0,1,2,3,4,5,6]);
 
         if(this.salary && this.rooms) {
+
+            console.log('expression has salary and rooms')
 
             this.data.forEach(d => {
 
@@ -58,11 +60,17 @@ class Expression {
         }
         else{
 
+            console.log('expression has no salary nor rooms')
+
             this.data.forEach(d => {
 
                     if(d.Postcode_District != ''){
 
+
+
                         let color = this.getColor(+d.median_pay_per_LA_x2,d['AllSale_MedianPrice'],+d['AllRent_MedianPrice'], d['Use?'])
+
+                        console.log(d.median_pay_per_LA_x2,d['AllSale_MedianPrice'],d['AllRent_MedianPrice'],d['Use?'])
 
                         this.matchExpression.push(d.Postcode_District, color);
 

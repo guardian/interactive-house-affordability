@@ -28,6 +28,20 @@ class Search{
             data: {
                 src: this.data,
                 keys: this.keys,
+                filter: (list) => {
+                    const results = list.filter((item) => {
+
+                        
+                        const inputValue = this.autoComplete.input.value.toLowerCase();
+                        const itemValue = item.value.code.toLowerCase();
+                
+                        if (itemValue.startsWith(inputValue)) {
+                            return item.value;
+                        }
+                    });
+                
+                    return results;
+                }
             },
             resultItem: {
                 highlight: true,
@@ -40,7 +54,7 @@ class Search{
                     console.log(list)
                     if (!data.results.length) {
        
-                        if(this.errorMessage)this.errorMessage.innerHTML = 'No results'
+                        if(this.errorMessage)this.errorMessage.innerHTML = 'Only enter the first part of postcode (e.g. N1)'
                         if(this.callback)this.callback({type:'search', value:null})
                         //this.hideResetBtn()
                     }
@@ -54,7 +68,7 @@ class Search{
             resultItem: {
                 element: (item, data) => {
                     //console.log('automcomplete', item)
-                    //this.callback({type:'search', value:data})
+                    this.callback({type:'search', value:data})
                 },
                 highlight: {
                     render: true
@@ -63,11 +77,21 @@ class Search{
             searchEngine: "strict",
             diacritics: true,
             highlight: {
-                render: true,
-            }
+                render: true
+            },
+            resultItem: {highlight:true}
         });
 
+        // this.autoComplete.input.addEventListener('navigate', (event) => {
+        //     console.log(event)
+        // })
+
         this.autoComplete.input.addEventListener('input', (event) => {
+
+            let key = event.input;
+            if (key === ' ') {
+                event.preventDefault();
+            }
             
             this.search = {type:'search', value:null};
 

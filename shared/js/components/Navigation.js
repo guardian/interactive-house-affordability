@@ -1,3 +1,4 @@
+
 class Navigation{
     constructor(config){
 
@@ -6,10 +7,16 @@ class Navigation{
         this.prev = config.prev;
         this.callback = config.callback || null;
 
+        this.hideBtn = config.hide;
+        this.panel = config.panel;
+
         this.index = 0;
 
         this.next.addEventListener('click', () => this.prevNext(1))
         this.prev.addEventListener('click', () => this.prevNext(-1))
+        this.hideBtn.addEventListener('click', () => this.hidePanel())
+
+        this.cont = 0;
 
         this.hide(this.prev)
 
@@ -68,6 +75,28 @@ class Navigation{
 
     getStep(){
         return this.index
+    }
+
+    hidePanel(){
+
+        if(this.cont == 0){
+            this.panel.style.transform = `translateY(${this.panel.getBoundingClientRect().height}px)`;
+            this.panel.querySelector('svg').style.transform = `rotate(180deg)`;
+            this.hideBtn.querySelector('.gv-hide-panel__text').innerHTML = 'Show'
+            this.cont ++
+        }
+        else{
+            this.panel.style.transform = `translateY(${0}px)`;
+            this.panel.querySelector('svg').style.transform = `rotate(0)`;
+            this.hideBtn.querySelector('.gv-hide-panel__text').innerHTML = 'Hide'
+            this.cont = 0;
+        }
+    }
+
+    showPanel(){
+        console.log('paso por aqui')
+        this.cont = 1;
+        this.hidePanel()
     }
 }
 

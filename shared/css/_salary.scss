@@ -19,7 +19,8 @@
         min-height: 44px;
         @include fs-textSans(3);
         font-size: 17px;
-        color: #121212;
+        border-radius: 6px;
+        border: 1px solid #dadada;
     }
 
     #gv-salary__error-mesage{

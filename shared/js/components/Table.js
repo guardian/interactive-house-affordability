@@ -3,6 +3,7 @@ class Table{
 
         this.table = config.table;
         this.h2 = this.table.querySelector('h2')
+        this.areas = this.table.querySelector('.areas')
         this.standfirst = this.table.querySelector('#gv-table__standfirst')
         this.housePrice = this.table.querySelector('#gv-table__house-price')
         this.annualIncome = this.table.querySelector('#gv-table__annual-income')
@@ -15,6 +16,7 @@ class Table{
     setData(data){
 
         this.h2.innerHTML = data.header;
+        this.areas.innerHTML = data.subheader;
         this.standfirst.innerHTML = data.standfirst;
         this.housePrice.innerHTML = data.housePrice;
         this.annualIncome.innerHTML = data.annualIncome;

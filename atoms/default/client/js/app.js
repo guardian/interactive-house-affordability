@@ -9,10 +9,11 @@ import Table from "../../../../shared/js/components/Table";
 import Article from "../../../../shared/js/components/Article";
 import Form from 'shared/js/components/Form';
 import Colorkey from "shared/js/components/Colorkey";
-
+import {numberWithCommas} from 'shared/js/util'
 const colorkey = new Colorkey({})
 
 const isMobile = window.matchMedia('(max-width: 600px)').matches;
+const width = document.documentElement.clientWidth;
 
 const data = dataRaw
 
@@ -25,7 +26,8 @@ const next = document.querySelector('#nextBtn')
 const prev = document.querySelector('#prevBtn')
 const tabs = document.querySelectorAll('.gv-tab')
 const scrollMessage = document.querySelector('#scroll-message');
-
+const hide = document.querySelector('.gv-hide-panel')
+const panel = document.querySelector('#gv-control-panel')
 scrollMessage.querySelector('p').innerHTML = isMobile ? 'Use two fingers to move the map':'Use command + scroll to zoom in'
 
 const articleTag = document.querySelector('#gv-article')
@@ -42,20 +44,20 @@ const buttonNames = [
     { step: 0, button: next, name: 'Compare your household' },
     { step: 1, button: prev, name: 'Back' },
     { step: 1, button: next, name: 'Submit' },
-    { step: 2, button: prev, name: 'Reset' },
+    { step: 2, button: prev, name: 'Insert your data' },
 ]
 
 const searchInput = document.querySelector('#gv-autoComplete')
 
-const placeHolder = 'Start typing a postcode'
+const placeHolder = 'Enter postcode'
 const searchErrorMessage = document.querySelector('#gv-location__error-mesage');
 const codes = postcodes;
 const resetBtn = document.querySelector('.gv-location-reset__btn');
 
-let maxBounds = [[-25, 44], [25, 65]];
+let maxBounds = [[-25, 45], [19, 64]];
 let container = 'gv-map'
 let style = dark
-let zoom = isMobile ? 5 : 5.2
+let zoom = isMobile ? 4 : 5
 let center = [-2.95, 55]
 let mapFeatures;
 
@@ -76,7 +78,16 @@ const onMapMove = (event) => {
 
         tooltip.innerHTML = event.features[0].properties.PostDist + ' | ' + match.LA
 
-        tooltip.style.left = event.point.x + 20 + 'px'
+        let tWidth = tooltip.getBoundingClientRect().width;
+
+        if(event.point.x > width/2){
+            tooltip.style.left = event.point.x - tWidth - 10 + 'px'
+        }
+        else{
+            tooltip.style.left = event.point.x + 20 + 'px'
+        }
+
+        
         tooltip.style.top = event.point.y + 'px'
 
         if (event.features.length > 0) {
@@ -87,6 +98,9 @@ const onMapMove = (event) => {
     else {
         map.highlightArea(null)
         tooltip.innerHTML = ''
+        tooltip.style.left = -1000 + 'px';
+        
+
     }
 }
 
@@ -95,6 +109,7 @@ const onMapLeave = (event) => {
     map.getMap().getCanvas().style.cursor = 'default';
 
     tooltip.innerHTML = '';
+    tooltip.style.left = -1000 + 'px';
 
     map.highlightArea(null)
 }
@@ -117,6 +132,7 @@ const onMapClick = (event) => {
             map.setAreaSelected(match.Postcode_District)
             map.zoomTo([[maxx, maxy], [minx, miny]])
             nav.setStep(2)
+            isMobile ? nav.showPanel() : null
             onNavChange(2)
             map.highlightArea(event.features[0].id, 'click')
             search.showResetBtn()
@@ -143,7 +159,8 @@ const map = new Map({
     onMove: onMapMove.bind(this),
     onLeave: onMapLeave.bind(this),
     onClick: onMapClick.bind(this),
-    interactive: true
+    interactive: true,
+    dragPan: isMobile ? false : true
 
 })
 
@@ -169,6 +186,7 @@ const searchOnResult = (result) => {
                     map.zoomTo([[maxx, maxy], [minx, miny]])
                     map.highlightArea()
                     nav.setStep(2)
+                    isMobile ? nav.showPanel() : null
                     onNavChange(2)
                     map.highlightArea(selectedId, 'click')
                 }
@@ -220,14 +238,7 @@ const onNavChange = (step) => {
     if (step == 0) {
 
         let expression = new Expression({ data: data })
-        console.log(expression.matchExpression.slice(2), expression.scale.range())
-
-        expression.scale.range().forEach(color => {
-            console.log(color, expression.matchExpression.slice(2).reduce((total,x) => (x==color ? total+1 : total), 0))
-        })
-
-        
-
+        console.log(expression.getExpression())
         map.paint(expression.getExpression())
         map.reset()
         map.clean()
@@ -253,9 +264,12 @@ const onNavChange = (step) => {
     if (step == 2) {
 
         let area = map.getAreaSelected();
+        console.log('app',area)
         let match = data.find(f => f.Postcode_District === area);
         let salary = form.salary.getSalary().value;
         let rooms = form.rooms.getRooms().value;
+
+        console.log(match)
 
 
         if (!area) {
@@ -266,8 +280,8 @@ const onNavChange = (step) => {
                 tabs[2].style.display = 'none';
 
                 article.setData({
-                    header: 'UK',
-                    paragraph: `Based on a household income of ${form.salary.getSalary().value} and ${form.rooms.getRooms().value} room${form.rooms.getRooms().value > 1 ? 's' : ''}, the following areas are judged to be affordable. Select an area to get more detail.`
+                    header: 'Where you could afford',
+                    paragraph: `Based on a household income of ${numberWithCommas(salary)} and ${rooms} room${rooms > 1 ? 's' : ''}, the following areas are considered affordable. Select an area to get more detail.`
                 })
             }
             // else {
@@ -299,11 +313,12 @@ const onNavChange = (step) => {
                 tabs[0].style.display = 'none';
 
                 table.setData({
-                    header: map.getAreaSelected(),
-                    standfirst: `Housing affordability in ${area} for £${salary} household income and ${rooms}-bedroom${rooms>1?'s':''} properties.`,
-                    housePrice: housePrice,
-                    annualIncome: parseInt(housePrice / salary) + ' times annual salary',
-                    rentPrice: match[`${rooms}BedRent_MedianPrice`],
+                    header: area,
+                    subheader:match['Town/Area'],
+                    standfirst: `Housing affordability for £${numberWithCommas(salary)} household income and ${rooms}-bedroom properties.`,
+                    housePrice: '£' + numberWithCommas(housePrice),
+                    annualIncome: numberWithCommas((housePrice / salary).toFixed(1)) + ' times annual salary',
+                    rentPrice: '£' + numberWithCommas(match[`${rooms}BedRent_MedianPrice`]),
                     percentincome: Math.round((houseRent * 100) / ((salary) / 12)) + '% of monthly salary',
                     label: `The majority of areas in this postcode district fall in ${match.LA} local authority.`
                 })
@@ -315,10 +330,11 @@ const onNavChange = (step) => {
 
                 table.setData({
                     header: area,
-                    standfirst: `There's no data for this selection. We're showing housing affordability in ${map.getAreaSelected()} for the median local household income of £${match.median_pay_per_LA_x2} and the median property.`,
-                    housePrice: match.AllSale_MedianPrice,
-                    annualIncome: parseInt(match.AllSale_MedianPrice / match.median_pay_per_LA_x2) + ' times annual salary',
-                    rentPrice: match.AllRent_MedianPrice,
+                    subheader:match['Town/Area'],
+                    standfirst: `Housing affordability for the median local household income of £${numberWithCommas(match.median_pay_per_LA_x2)} and the median property.`,
+                    housePrice: '£' + numberWithCommas(match.AllSale_MedianPrice),
+                    annualIncome: numberWithCommas((match.AllSale_MedianPrice / match.median_pay_per_LA_x2).toFixed(1)) + ' times annual salary',
+                    rentPrice: '£' + numberWithCommas(match.AllRent_MedianPrice),
                     percentincome: Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2) / 12)) + '% of monthly salary',
                     label: `The majority of areas in this postcode district fall in ${match.LA} local authority.`
                 })
@@ -338,6 +354,8 @@ const nav = new Navigation({
     steps: 3,
     next: next,
     prev: prev,
+    hide: hide,
+    panel: panel,
     callback: onNavChange
 })
 

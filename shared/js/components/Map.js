@@ -20,9 +20,11 @@ class Map {
         this.onMove = config.onMove;
         this.onLeave = config.onLeave;
         this.onClick = config.onClick;
+        this.dragPan = config.dragPan;
         this.areaSelected = null;
         this.bin = []
         this.isLoaded = false;
+        
 
         this.interval = null;
 
@@ -35,6 +37,8 @@ class Map {
             interactive: this.interactive,
             maxZoom: 10,
             maxBounds: this.maxBounds,
+            dragPan: this.dragPan,
+            dragRotate:false
 
         });
 
@@ -181,7 +185,7 @@ class Map {
             essential: true
         });
 
-        //this.setAreaSelected(null)
+        this.setAreaSelected(null)
     }
 
     getMap() {
