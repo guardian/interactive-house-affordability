@@ -92,7 +92,26 @@ table {
     border-collapse: collapse;
 }
 
-.maplibregl-cooperative-gesture-screen{display: none;}
+.maplibregl-cooperative-gesture-screen{
+    position: absolute;
+    top: 0;
+    transition: visibility 2s;
+    visibility: hidden ;
+
+    &.maplibregl-show{
+        transition: visibility 2s;
+        visibility: visible;
+        
+    }
+
+    @include mq($until:desktop){
+        .maplibregl-desktop-message{display: none;}
+    }
+
+    @include mq(desktop){
+        .maplibregl-mobile-message{display: none;}
+    }
+}   
 
 #scroll-message{
 

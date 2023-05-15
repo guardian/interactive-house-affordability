@@ -42,10 +42,11 @@ class Map {
         });
 
         this.map.touchZoomRotate.disableRotation();
+        
 
         this.source = this.map.getSource('vector-tiles');
 
-        this.map.on("wheel", event => { this.onWheel(event) })
+        //this.map.on("wheel", event => { this.onWheel(event) })
         this.map.on("load", (event) => { this.onLoaded(); this.isLoaded = true })
         this.map.on('mousemove', this.layer, (event) => { this.onMove(event) })
         this.map.on('mouseenter', this.layer, (event) => { this.onEnter(event) })
