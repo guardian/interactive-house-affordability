@@ -28,7 +28,7 @@ const tabs = document.querySelectorAll('.gv-tab')
 const scrollMessage = document.querySelector('#scroll-message');
 const hide = document.querySelector('.gv-hide-panel')
 const panel = document.querySelector('#gv-control-panel')
-scrollMessage.querySelector('p').innerHTML = isMobile ? 'Use two fingers to move the map':`Use ${platform == 'MacIntel' ? '⌘' : 'control'} + scroll to zoom in`
+scrollMessage.querySelector('p').innerHTML = isMobile ? 'Use two fingers to move the map':`Use ${platform.indexOf("Mac") === 0 ? '⌘' : 'control'} + scroll to zoom in`
 
 const articleTag = document.querySelector('#gv-article')
 const tableTag = document.querySelector('#gv-table')
