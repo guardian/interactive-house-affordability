@@ -92,6 +92,8 @@ table {
     border-collapse: collapse;
 }
 
+.maplibregl-cooperative-gesture-screen{display: none;}
+
 #scroll-message{
 
     background-color: rgba($color: #000000, $alpha: 0.2);
@@ -125,10 +127,11 @@ table {
         visibility: visible;
     }
 
+
 }
 
 .gv-footnote{
-    width: 100%;
+    width: calc(100% - 10px);
     background-color: white;
     @include fs-textSans(3);
     height: auto;
@@ -141,6 +144,7 @@ table {
     color: #767676;
     display: inline-block;
     border-bottom: 1px solid #dcdcdc;
+    margin-left: 10px;
 
 }
 

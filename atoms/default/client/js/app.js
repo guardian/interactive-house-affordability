@@ -44,7 +44,7 @@ const buttonNames = [
     { step: 0, button: next, name: 'Compare your household' },
     { step: 1, button: prev, name: 'Back' },
     { step: 1, button: next, name: 'Submit' },
-    { step: 2, button: prev, name: 'Insert your data' },
+    { step: 2, button: prev, name: 'Compare your household' },
 ]
 
 const searchInput = document.querySelector('#gv-search-box')
@@ -265,6 +265,21 @@ const onNavChange = (step) => {
         let match = data.find(f => f.Postcode_District === area);
         let salary = form.salary.getSalary().value;
         let rooms = form.rooms.getRooms().value;
+        let roomsStr = ""
+
+        switch(rooms){
+            case 1:
+                roomsStr = 'one';
+                break
+            case 2:
+                roomsStr = 'two';
+                break
+            case 3:
+                roomsStr = 'three';
+                break
+            case 4:
+                roomsStr = 'four';
+        }
 
         if (!area) {
             console.log("no area selected")
@@ -275,7 +290,7 @@ const onNavChange = (step) => {
 
                 article.setData({
                     header: 'Where you could afford',
-                    paragraph: `Based on a household income of ${numberWithCommas(salary)} and ${rooms} room${rooms > 1 ? 's' : ''}, the following areas are considered affordable. Select an area to get more detail.`
+                    paragraph: `Based on a household income of £${numberWithCommas(salary)} and ${roomsStr} bedroom${rooms > 1 ? 's' : ''}${roomsStr == 'four' ? ' or more' : ''}, the following areas are considered affordable. Select an area to get more detail.`
                 })
             }
         }
@@ -318,7 +333,7 @@ const onNavChange = (step) => {
                     label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area.`
                 })
 
-                nav.name(prev, 'Insert your data')
+                nav.name(prev, 'Compare your household')
                 //nav.reset()
 
             }

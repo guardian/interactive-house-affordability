@@ -17,7 +17,7 @@
     
 
 .gv-location__form {
-    min-width: 330px;
+
     display: flex;
     flex-direction: column;
     font-size: 18px;
@@ -27,12 +27,16 @@
     padding: 8px 12px 8px 12px;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2),0 -1px 0px rgba(0,0,0,0.02);
-    margin: 8px 8px 0 0;
+
 
     @include mq($until:tablet) {
-        margin: 0;
-        width: calc(100% - 8px);
-        margin: 0 0 0 4px;
+        min-width: calc(100% - 80px);
+        margin: 4px 4px 0 4px;
+    }
+
+    @include mq(desktop) {
+        min-width: 330px;
+        margin: 8px 8px 0 0;
     }
 
 
