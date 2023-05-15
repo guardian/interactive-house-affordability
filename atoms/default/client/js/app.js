@@ -10,8 +10,6 @@ import Article from "../../../../shared/js/components/Article";
 import Form from 'shared/js/components/Form';
 import {numberWithCommas} from 'shared/js/util'
 
-const platform = window.navigator.platform
-
 const isMobile = window.matchMedia('(max-width: 600px)').matches;
 const width = document.documentElement.clientWidth;
 
