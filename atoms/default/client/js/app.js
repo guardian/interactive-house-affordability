@@ -25,10 +25,8 @@ const bedroomsSelect = document.querySelector('#gv-bedrooms-input')
 const next = document.querySelector('#nextBtn')
 const prev = document.querySelector('#prevBtn')
 const tabs = document.querySelectorAll('.gv-tab')
-const scrollMessage = document.querySelector('#scroll-message');
 const hide = document.querySelector('.gv-hide-panel')
 const panel = document.querySelector('#gv-control-panel')
-scrollMessage.querySelector('p').innerHTML = isMobile ? 'Use two fingers to move the map':`Use ${platform.indexOf("Mac") === 0 ? '⌘' : 'control'} + scroll to zoom in`
 
 const articleTag = document.querySelector('#gv-article')
 const tableTag = document.querySelector('#gv-table')
@@ -153,7 +151,6 @@ const map = new Map({
     zoom: zoom,
     center: center,
     tooltip: tooltip,
-    scrollMessage: scrollMessage,
     layer: 'postal-districts',
     onLoaded: onMapLoaded.bind(this),
     onMove: onMapMove.bind(this),
@@ -380,26 +377,3 @@ const form = new Form({
     bedroomsSelect: bedroomsSelect,
     callback: onFormChange
 })
-
-if (isMobile){
-    document.addEventListener("scroll", (event) => {onWheel(event)});
-}
-
-let interval = null;
-let cont = 0
-
-const onWheel = (event) => {
-
-    scrollMessage.classList.add("show");
-
-    if(!interval)
-    {
-        interval = setInterval(() => {
-            console.log(cont)
-            cont ++
-            scrollMessage.classList.remove("show");
-        },2000);
-    }
-    
-
-}

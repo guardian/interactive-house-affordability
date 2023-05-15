@@ -14,7 +14,6 @@ class Map {
         this.layer = config.layer;
         this.hoverId = null;
         this.clickedId = null;
-        this.scrollMessage = config.scrollMessage;
         this.tooltip = config.tooltip;
         this.onLoaded = config.onLoaded;
         this.onMove = config.onMove;
@@ -23,7 +22,6 @@ class Map {
         this.areaSelected = null;
         this.bin = []
         this.isLoaded = false;
-        
 
         this.interval = null;
 
@@ -45,7 +43,6 @@ class Map {
 
         this.source = this.map.getSource('vector-tiles');
 
-        this.map.on("wheel", event => { this.onWheel(event) })
         this.map.on("load", (event) => { this.onLoaded(); this.isLoaded = true })
         this.map.on('mousemove', this.layer, (event) => { this.onMove(event) })
         this.map.on('mouseenter', this.layer, (event) => { this.onEnter(event) })
@@ -54,34 +51,6 @@ class Map {
             this.setAreaSelected(event.features[0].properties.PostDist)
             this.onClick(event)
         })
-    }
-
-    onWheel(event) {
-        
-        if (event.originalEvent.ctrlKey) {
-            return;
-        }
-    
-        if (event.originalEvent.metaKey) {
-            return;
-        }
-    
-        if (event.originalEvent.altKey) {
-            return;
-        }
-    
-        event.preventDefault();
-    
-        this.scrollMessage.classList.add("show");
-    
-        if(!this.interval)
-        {
-            this.interval = setInterval(() => {
-                this.scrollMessage.classList.remove("show");
-            },2000);
-        }
-        
-
     }
 
     onEnter(event) {
