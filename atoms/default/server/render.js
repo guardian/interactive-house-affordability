@@ -8,13 +8,11 @@ export async function render() {
     const sheet = await request({"uri":'https://interactive.guim.co.uk/docsdata-test/11SLL55WwROril-6407448VlmwpEBA28iAe8g95SjPUs.json', json:true});
 
     //console.log(sheet.sheets.Master)
-    fs.writeFileSync(`assets/sheet.json`, JSON.stringify(sheet.sheets.Master));
+    //fs.writeFileSync(`assets/sheet.json`, JSON.stringify(sheet.sheets.Master));
 
     const areasCodes = []
 
     sheet.sheets.Master.forEach(element => {
-
-        console.log(element)
         
         areasCodes.push(
             {
@@ -26,7 +24,7 @@ export async function render() {
 
     });
 
-    fs.writeFileSync(`assets/codes.json`, JSON.stringify(areasCodes));
+    //fs.writeFileSync(`assets/codes.json`, JSON.stringify(areasCodes));
 
 
     return mainHTML;

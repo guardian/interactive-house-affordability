@@ -159,8 +159,7 @@ const map = new Map({
     onMove: onMapMove.bind(this),
     onLeave: onMapLeave.bind(this),
     onClick: onMapClick.bind(this),
-    interactive: true,
-    dragPan: isMobile ? false : true
+    interactive: true
 
 })
 
@@ -366,3 +365,26 @@ const form = new Form({
     bedroomsSelect: bedroomsSelect,
     callback: onFormChange
 })
+
+if (isMobile){
+    document.addEventListener("scroll", (event) => {onWheel(event)});
+}
+
+let interval = null;
+let cont = 0
+
+const onWheel = (event) => {
+
+    scrollMessage.classList.add("show");
+
+    if(!interval)
+    {
+        interval = setInterval(() => {
+            console.log(cont)
+            cont ++
+            scrollMessage.classList.remove("show");
+        },2000);
+    }
+    
+
+}

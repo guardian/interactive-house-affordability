@@ -20,7 +20,6 @@ class Map {
         this.onMove = config.onMove;
         this.onLeave = config.onLeave;
         this.onClick = config.onClick;
-        this.dragPan = config.dragPan;
         this.areaSelected = null;
         this.bin = []
         this.isLoaded = false;
@@ -37,10 +36,12 @@ class Map {
             interactive: this.interactive,
             maxZoom: 10,
             maxBounds: this.maxBounds,
-            dragPan: this.dragPan,
-            dragRotate:false
-
+            dragPan: true,
+            dragRotate:false,
+            cooperativeGestures:true
         });
+
+        this.map.touchZoomRotate.disableRotation();
 
         this.source = this.map.getSource('vector-tiles');
 
@@ -77,7 +78,7 @@ class Map {
         {
             this.interval = setInterval(() => {
                 this.scrollMessage.classList.remove("show");
-            }, 1000);
+            },2000);
         }
         
 
