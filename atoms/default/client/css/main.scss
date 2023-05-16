@@ -65,13 +65,32 @@
     z-index: 1;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+
+.maplibregl-canvas{
+    max-width: 100%;
+}
+
+
 .maplibregl-control-container{
     display: none;
 }
 
 
-.maplibregl-canvas{
-    max-width: 100%;
+.maplibregl-desktop-message, .maplibregl-mobile-message {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.maplibregl-mobile-message {
+    font-size: 20px;
+    text-align: center;
+    transform: translateY(-100px);
 }
 
 #gv-map-tooltip{
@@ -85,68 +104,6 @@
     border-radius: 10px;
     padding: 6px;
     background-color: #000;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.maplibregl-cooperative-gesture-screen{
-    position: absolute;
-    top: 0;
-    transition: visibility 2s;
-    visibility: hidden ;
-
-    &.maplibregl-show{
-        transition: visibility 2s;
-        visibility: visible;
-        
-    }
-
-    @include mq($until:desktop){
-        .maplibregl-desktop-message{display: none;}
-    }
-
-    @include mq(desktop){
-        .maplibregl-mobile-message{display: none;}
-    }
-}   
-
-#scroll-message{
-
-    background-color: rgba($color: #000000, $alpha: 0.2);
-    color: white;
-    font-size: 22;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    z-index: 1;
-    text-align: center;
-    margin: 0;
-    pointer-events: none;
-    z-index: 3;
-
-    p{
-        @include fs-textSans(3);
-        font-size: 30px;
-        font-weight: bold;
-        position: absolute;
-        top:50%;
-        transform: translateY(-50%);
-        left: 50%;
-        transform: translateX(-50%);
-        line-height: 35px;
-    }
-
-    visibility: hidden;
-
-    &.show{
-        visibility: visible;
-    }
-
-
 }
 
 .gv-footnote{

@@ -17,6 +17,13 @@ class Search{
         this.autoCompleteJs()
         
         this.resetBtn.addEventListener('click',() => this.reset())
+
+        this.input.addEventListener("keyup", function (event) {
+            if(event.key === 'Enter'){
+                let match = config.data.find(f=> f.code.toLowerCase() === config.input.value.toLowerCase())
+                if(match)config.callback({type:'search', value:match.code})
+            }
+        })
         
     }
 
@@ -79,21 +86,13 @@ class Search{
             resultItem: {highlight:true}
         });
 
-
-        this.autoComplete.input.addEventListener('input', (event) => {
-            
-            this.search = {type:'search', value:null};
-
-            if(this.callback)this.callback(this.search)
-
-            //this.hideResetBtn()
-        })
-
         this.autoComplete.input.addEventListener("selection", (event) => {
+
+            console.log('selection:',event)
 
             this.input.value = event.detail.selection.value.code
 
-            this.search = {type:'search', value:event};
+            this.search = {type:'search', value:this.input.value};
             
             if(this.callback)this.callback(this.search)
 
