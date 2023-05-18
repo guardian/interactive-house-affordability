@@ -9,6 +9,9 @@ import Table from "../../../../shared/js/components/Table";
 import Article from "../../../../shared/js/components/Article";
 import Form from 'shared/js/components/Form';
 import {numberWithCommas} from 'shared/js/util'
+import labels from 'assets/labels.json'
+
+dark.sources.labels.data = labels;
 
 const isMobile = window.matchMedia('(max-width: 600px)').matches;
 const width = document.documentElement.clientWidth;
@@ -60,7 +63,7 @@ let mapFeatures;
 const onMapLoaded = () => {
     
     mapFeatures = map.getMap().querySourceFeatures('vector-tiles', {
-        sourceLayer: 'PostalDistrictwgs84bb'
+        sourceLayer: 'PostalDistrictwgs84bbsprawl'
     });
 
     onNavChange(0)
@@ -68,19 +71,14 @@ const onMapLoaded = () => {
 
 const onMapMove = (event) => {
 
-    let match = data.find(f => f.Postcode_District === event.features[0].properties.PostDist);
-
-    if (match) {
-
-        tooltip.innerHTML = event.features[0].properties.PostDist + ' | ' + match.LA
-
-        let tWidth = tooltip.getBoundingClientRect().width;
+    let tWidth = tooltip.getBoundingClientRect().width;
 
         if(event.point.x > width/2){
             tooltip.style.left = event.point.x - tWidth - 10 + 'px'
+            
         }
         else{
-            tooltip.style.left = event.point.x + 20 + 'px'
+            tooltip.style.left = event.point.x + 10 + 'px'
         }
 
         
@@ -90,12 +88,15 @@ const onMapMove = (event) => {
             map.highlightArea(event.features[0].id, 'hover')
         }
 
+    if (event.features[0].properties.Locale) {
+
+        tooltip.innerHTML = event.features[0].properties.PostDist + ' | ' + event.features[0].properties.Locale
+
     }
     else {
-        map.highlightArea(null)
-        tooltip.innerHTML = ''
-        tooltip.style.left = -1000 + 'px';
-        
+
+        tooltip.innerHTML = event.features[0].properties.PostDist + ' | ' + event.features[0].properties.Sprawl
+
 
     }
 }
@@ -112,10 +113,10 @@ const onMapLeave = (event) => {
 
 const onMapClick = (event) => {
 
-    let maxx = event.features[0].properties['postal-district-bounding-boxes_maxx']
-    let maxy = event.features[0].properties['postal-district-bounding-boxes_maxy']
-    let minx = event.features[0].properties['postal-district-bounding-boxes_minx']
-    let miny = event.features[0].properties['postal-district-bounding-boxes_miny']
+    let maxx = event.features[0].properties['maxx']
+    let maxy = event.features[0].properties['maxy']
+    let minx = event.features[0].properties['minx']
+    let miny = event.features[0].properties['miny']
 
     let rooms = form.rooms.getRooms().value;
 
@@ -131,7 +132,7 @@ const onMapClick = (event) => {
             isMobile ? nav.showPanel() : null
             onNavChange(2)
             map.highlightArea(event.features[0].id, 'click')
-            search.showResetBtn()
+            search.enableResetBtn()
 
         }
     }
@@ -160,17 +161,18 @@ const map = new Map({
 
 const searchOnResult = (result) => {
 
-    console.log('searchOnResult',result)
+    console.log('searchOnResult')
 
     if (result) {
         if (result.value) {
+
             let selectedId = result.value
             let feature = mapFeatures.find(f => f.id === selectedId)
 
-            let maxx = feature.properties['postal-district-bounding-boxes_maxx']
-            let maxy = feature.properties['postal-district-bounding-boxes_maxy']
-            let minx = feature.properties['postal-district-bounding-boxes_minx']
-            let miny = feature.properties['postal-district-bounding-boxes_miny']
+            let maxx = feature.properties['maxx']
+            let maxy = feature.properties['maxy']
+            let minx = feature.properties['minx']
+            let miny = feature.properties['miny']
 
             let rooms = form.rooms.getRooms().value;
             let match = data.find(f => f.Postcode_District === selectedId);
@@ -180,6 +182,7 @@ const searchOnResult = (result) => {
                 if (match[rooms + 'Bed_USE'] != '-') {
                     map.setAreaSelected(selectedId)
                     map.zoomTo([[maxx, maxy], [minx, miny]])
+                    search.enableResetBtn()
                     map.highlightArea()
                     nav.setStep(2)
                     isMobile ? nav.showPanel() : null
@@ -193,8 +196,11 @@ const searchOnResult = (result) => {
         }
     }
     else {
+
+        console.log('no result')
         map.reset()
-       // map.clean()
+        map.clean()
+        onNavChange(2)
     }
 
 }
@@ -211,8 +217,6 @@ const search = new Search({
 })
 
 const onNavChange = (step) => {
-
-    console.log("step: ", step)
 
     tabs.forEach(tab => {
         tab.style.display = 'none'
@@ -239,11 +243,12 @@ const onNavChange = (step) => {
         map.clean()
         form.reset()
         nav.enable(next)
-        search.reset()
+        search.disableResetBtn()
+        //search.reset()
 
         article.setData({
             header: 'Where can you afford to buy or rent in Britain?',
-            paragraph: `This map currently compares an area’s house prices against the average income of local residents. Compare them against your own household here. Click on a postcode district to see each area’s average house prices compared with the typical income of local residents. Or compare with your own household income below`
+            paragraph: `Click on a postcode district to see its average house prices compared with the typical income of local residents. Or compare with your own household income below.`
         })
     }
 
@@ -279,24 +284,36 @@ const onNavChange = (step) => {
         }
 
         if (!area) {
-            console.log("no area selected")
+
+            tabs[0].style.display = 'block';
+            tabs[2].style.display = 'none';
+
+            if(isMobile){
+                    
+                nav.setCont(1)
+                nav.hidePanel()
+            }
+
             if (salary && rooms) {
-                console.log("salary and rooms selected")
-                tabs[0].style.display = 'block';
-                tabs[2].style.display = 'none';
 
                 article.setData({
                     header: 'Where you could afford',
                     paragraph: `Based on a household income of £${numberWithCommas(salary)} and ${roomsStr} bedroom${rooms > 1 ? 's' : ''}${roomsStr == 'four' ? ' or more' : ''}, the following areas are considered affordable. Select an area to get more detail.`
                 })
             }
+            else if(!salary && rooms == 0){
+
+                article.setData({
+                    header: 'Where can you afford to buy or rent in Britain?',
+                    paragraph: `Click on a postcode district to see its average house prices compared with the typical income of local residents. Or compare with your own household income below.`
+                })
+            }
         }
         else {
 
-            console.log('area selected')
 
             if (salary && rooms && match[rooms + 'Bed_USE'] != '-') {
-                console.log("salary and rooms selected")
+
                 let housePrice = match[`${rooms}BedSale_MedianPrice`];
                 let houseRent = match[`${rooms}BedRent_MedianPrice`];
 
@@ -306,16 +323,16 @@ const onNavChange = (step) => {
                 table.setData({
                     header: area,
                     subheader:match['Town/Area'],
-                    standfirst: `Housing affordability for £${numberWithCommas(salary)} household income and ${rooms}-bedroom properties.`,
+                    standfirst: `Housing affordability for £${numberWithCommas(salary)} household income and ${rooms}-bedroom properties. Median figures for ${rooms}-bedroom properties only.`,
                     housePrice: '£' + numberWithCommas(housePrice),
-                    annualIncome: numberWithCommas((housePrice / salary).toFixed(1)) + ' times annual salary',
+                    annualIncome:'Mortgage ' +  numberWithCommas(((housePrice * .9) / salary).toFixed(1)) + ' times annual income*',
                     rentPrice: '£' + numberWithCommas(match[`${rooms}BedRent_MedianPrice`]),
-                    percentincome: Math.round((houseRent * 100) / ((salary) / 12)) + '% of monthly salary',
+                    percentincome: Math.round((houseRent * 100) / ((salary) / 12)) + '% of monthly income',
                     label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area.`
                 })
             }
             else {
-                console.log("neither salary nor rooms selected")
+
                 tabs[0].style.display = 'none';
                 tabs[2].style.display = 'block';
 
@@ -324,15 +341,13 @@ const onNavChange = (step) => {
                     subheader:match['Town/Area'],
                     standfirst: `Housing affordability for the median local household income of £${numberWithCommas(match.median_pay_per_LA_x2)} and the median property.`,
                     housePrice: '£' + numberWithCommas(match.AllSale_MedianPrice),
-                    annualIncome: numberWithCommas((match.AllSale_MedianPrice / match.median_pay_per_LA_x2).toFixed(1)) + ' times annual salary',
+                    annualIncome:'Mortgage ' +  numberWithCommas(((match.AllSale_MedianPrice * .9) / match.median_pay_per_LA_x2).toFixed(1)) + ' times annual income',
                     rentPrice: '£' + numberWithCommas(match.AllRent_MedianPrice),
-                    percentincome: Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2) / 12)) + '% of monthly salary',
-                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area.`
+                    percentincome: Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2) / 12)) + '% of monthly income',
+                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area. *Assumes 10% deposit.`
                 })
 
                 nav.name(prev, 'Compare your household')
-                //nav.reset()
-
             }
         }
 

@@ -2,63 +2,95 @@
 @import "fonts";
 @import "mq";
 @import "palette";
-@import "dcr_enhancer"; // default left column enhancer, works with inline, showcase and immersive weighting
+//@import "dcr_enhancer"; // default left column enhancer, works with inline, showcase and immersive weighting
 //@import "full_immersive_enhancer"; // full-width enhancer, to be used with immersive weighting. Removes left colum, sets 100vw atom width at any breakpoint
 // @import "darkmodedefault"; // basic media queries for adding dark mode and several default colours
 
 /*----- Vertical scrollbar width used for sizing full viewport width elements -----*/
-:root {
-    --scrollbar-width: 0px;
-    --half-scrollbar-width: 0px;
-}
 
-.interactive-atom {
-    margin: 0 0 30px 0;
-    padding: 0;
 
-    @include mq($from: 100px,  $until: desktop) {
-        margin: 0 0 60px 0;
+    .gv-color-key-table__header{
+        border-top: 1px solid #dcdcdc;
+        max-width: 620px;
     }
+
+.key-box{width: 3px; height: 5px; border-radius: 3px;}
+
+#color1{background-color: #135e58;}
+#color2{background-color: #329890;}
+#color3{ background-color: #88cfc8;}
+#color5{ background-color: #ffaf81;}
+#color6{ background-color: #e25d28;}
+#color7{ background-color: #a50b06;}
+
+#color4{ background-color: #fff700;}
+
+.gv-color-key-table__header{
+    padding: 6px 0 10px 0;
+    margin: 0;
+    font-family: 'GH Guardian Headline', Georgia, serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #121212;
 }
-// uncomment to test
-// .gv-wrapper {
-//     height: 400px;
-//     background: #121212;
-//     color: white;
-//     border-top: 1px solid #dcdcdc;
-//     border-bottom: 1px solid #dcdcdc;
-// }
 
+.gv-color-key-table__subheader{
 
-/*----- App fixes -----*/
-.ios, .android {
-    .element--immersive {
-        @include mq($until: tablet) {
-            width: 100vw !important;
-            position: relative;
-            left: 50% !important;
-            right: 50% !important;
-            margin-left: -50vw !important;
-            margin-right: -50vw !important;
-        }
-        @include mq(tablet) {
-            transform: translateX(-20px);
-            width: calc(100% + 60px);
-        }
+    padding: 0 0 25px 0;
+    margin: 0;
+    @include fs-textSans(3);
+    font-size: 14px;
+    font-weight: 200;
+    line-height: 18px;
+    color: #121212;
+
+}
+
+.gv-color-key-table{
+
+ 
+    border-collapse: separate;
+    //margin:5px auto;
+
+    max-width: 620px;
+
+    @include mq(leftCol) {
+        margin-left: 0px;
     }
     
-    //remove dark mode padding in apps
-    figure.element.element-atom, figure.interactive.interactive-atom.interactive--loading {
-        padding: 0 !important;
+    @include mq(wide) {
+        margin-left: 0px;
     }
+
 }
 
-.key-box{width: 6px; height: 12px;}
+.gv-color-key-table tbody tr td{
+    @include fs-textSans(3);
+    color:#000;
+    font-size:14px;
+    padding:10px 0 10px 8px;
+    border-bottom:1px solid #e0e0e0;
+    text-align: left;
+}
 
-#color1{background-color: #003825;}
-#color2{background-color: #377761;}
-#color3{ background-color: #78bba2;}
-#color4{ background-color: #ffe500;}
-#color5{ background-color: #f0a900;}
-#color6{ background-color: #e06800;}
-#color7{ background-color: #c70000;}
+.gv-color-key-table th{
+    @include fs-textSans(3);
+    font-weight: bold;
+    font-size: 14px;
+    text-align: left;
+    padding:0px 0 10px 8px;
+}
+
+.gv-color-key-table tbody tr td:first-child{
+    padding:10px 8px 10px 2px;
+}
+
+.gv-table__description{
+
+    font-weight: bold;
+}
+
+// #gv-table__annual-income,#gv-table__percent-income{
+//     font-size: 14px;
+// }

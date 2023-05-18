@@ -11,7 +11,14 @@ class Expression {
         this.rooms = config.rooms || null;
         this.matchExpression = ["match", ["get", "PostDist"]];
         this.scale = scaleThreshold()
-        .range(['#c70000', '#e06800', '#f0a900', '#ffe500', '#78bba2', '#377761', '#003825'])
+        .range(['#a50b06' , '#e25d28', '#ffaf81', '#fff700', '#88cfc8' , '#329890', '#135e58' ])
+        //.range(['#a00000', '#cc6750', '#ecb3a4', '#00b2ff', '#c5e7bf', '#88cf80', '#3db540'])
+        //.range(['#a00000', '#cc6750', '#ecb3a4', '#ffffff', '#c0d3cd', '#82a89d', '#3db540'])
+        //.range(['#a00000', '#c36100', '#e3a300', '#00b2ff', '#c6c145', '#8b9f5e', '#457e6f'])
+        //.range(['#c70000', '#e77054', '#fbb8a6', '#ffe500', '#cbf1b9', '#91e273', '#42d119'])
+        //.range(['#c70000', '#e77054', '#fbb8a6', '#ffe500', '#c3dbf2', '#82b8e5', '#1896d7'])
+        //.range(['#810000', '#e12e17', '#fe9975', '#ffe500', '#6eb7e8', '#2574a8', '#003462'])
+        //.range(['#c70000', '#e06800', '#f0a900', '#ffe500', '#78bba2', '#377761', '#003825'])
         .domain([0,1,2,3,4,5,6]);
 
         if(this.salary && this.rooms) {

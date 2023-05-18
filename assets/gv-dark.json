@@ -10,12 +10,15 @@
         "vector-tiles": {
             "type": "vector",
             "tiles": [
-                "https://interactive.guim.co.uk/maptiles/postal-districts-bb/{z}/{x}/{y}.pbf"
+                "https://interactive.guim.co.uk/maptiles/postal-districts-sprawl/{z}/{x}/{y}.pbf"
             ],
             "promoteId": "PostDist"
+        },
+        "labels":{
+            "type": "geojson"
         }
     },
-    "sprite": "",
+    "sprite": "https://interactive.guim.co.uk/maptiles/ukraine-100-days/sprites/sprite",
     "glyphs": "https://interactive.guim.co.uk/maptiles/fonts/{fontstack}/{range}.pbf",
     "layers": [
         {
@@ -81,7 +84,7 @@
             "id": "postal-districts",
             "type": "fill",
             "source": "vector-tiles",
-            "source-layer": "PostalDistrictwgs84bb",
+            "source-layer": "PostalDistrictwgs84bbsprawl",
             "paint": {
               "fill-color": "#dadada"
             }
@@ -90,7 +93,7 @@
             "id": "postal-districts-stroke",
             "type": "line",
             "source": "vector-tiles",
-            "source-layer": "PostalDistrictwgs84bb",
+            "source-layer": "PostalDistrictwgs84bbsprawl",
             "paint": {
                 "line-color":"#000",
                 "line-opacity": [
@@ -106,7 +109,7 @@
             "id": "postal-districts-stroke-clicked",
             "type": "line",
             "source": "vector-tiles",
-            "source-layer": "PostalDistrictwgs84bb",
+            "source-layer": "PostalDistrictwgs84bbsprawl",
             "paint": {
                 "line-color":"#000",
                 "line-opacity": [
@@ -116,6 +119,32 @@
                     0
                     ],
                 "line-width":2
+            }
+        },
+        {
+            "id": "Admin-1 capital",
+            "type": "symbol",
+            "source": "labels",
+            "filter": [
+                "==",
+                "featurecla",
+                "Admin-1 capital"
+            ],
+            "layout": {
+                "text-size": 16,
+                "text-font": ["Gdn Text Sans TS3Bold"],
+                "text-justify": "left",
+                "text-field": "{name}",
+                "text-variable-anchor": ["left","right","center"],
+                "text-radial-offset": 0.5,
+                "icon-image": "Admin-1 capital",
+                "icon-size": 1,
+                "visibility": "visible"
+            },
+            "paint": {
+                "text-halo-color": "#FFFFFF",
+                "text-halo-width": 1,
+                "text-color": "#333333"
             }
         }
     ]

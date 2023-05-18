@@ -18,10 +18,13 @@ class Search{
         
         this.resetBtn.addEventListener('click',() => this.reset())
 
-        this.input.addEventListener("keyup", function (event) {
+        this.input.addEventListener("keyup",  (event) => {
             if(event.key === 'Enter'){
                 let match = config.data.find(f=> f.code.toLowerCase() === config.input.value.toLowerCase())
-                if(match)config.callback({type:'search', value:match.code})
+                if(match){
+                    config.callback({type:'search', value:match.code})
+                    this.disable()
+                }
             }
         })
         
@@ -88,26 +91,24 @@ class Search{
 
         this.autoComplete.input.addEventListener("selection", (event) => {
 
-            console.log('selection:',event)
-
             this.input.value = event.detail.selection.value.code
 
             this.search = {type:'search', value:this.input.value};
             
             if(this.callback)this.callback(this.search)
 
-            this.showResetBtn()
+            this.enableResetBtn()
 
         })
 
     }
 
-    hideResetBtn(){
-        this.resetBtn.style.visibility = 'hidden'
+    disableResetBtn(){
+        this.resetBtn.classList.remove('enabled')
     }
 
-    showResetBtn(){
-        this.resetBtn.style.visibility = 'visible'
+    enableResetBtn(){
+        this.resetBtn.classList.add('enabled')
     }
 
     getSearch(){
@@ -117,7 +118,7 @@ class Search{
     reset(){
         this.search = null
         this.input.value = ''
-        this.hideResetBtn()
+        this.disableResetBtn()
         this.callback()
         this.autoComplete.data.src = this.data;
     }
@@ -127,7 +128,7 @@ class Search{
     }
 
     disable(){
-        this.input.disabled = true;
+        this.autoComplete.close();
     }
 }
 

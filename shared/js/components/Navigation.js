@@ -80,12 +80,15 @@ class Navigation{
     hidePanel(){
 
         if(this.cont == 0){
+
+            console.log('hide 0')
             this.panel.style.transform = `translateY(${this.panel.getBoundingClientRect().height}px)`;
             this.panel.querySelector('svg').style.transform = `rotate(180deg)`;
             this.hideBtn.querySelector('.gv-hide-panel__text').innerHTML = 'Show'
             this.cont ++
         }
         else{
+            console.log('hide 1')
             this.panel.style.transform = `translateY(${0}px)`;
             this.panel.querySelector('svg').style.transform = `rotate(0)`;
             this.hideBtn.querySelector('.gv-hide-panel__text').innerHTML = 'Hide'
@@ -94,9 +97,12 @@ class Navigation{
     }
 
     showPanel(){
-        console.log('paso por aqui')
         this.cont = 1;
         this.hidePanel()
+    }
+
+    setCont(cont){
+        this.cont = cont
     }
 }
 

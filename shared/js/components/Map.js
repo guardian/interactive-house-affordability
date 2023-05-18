@@ -31,9 +31,9 @@ class Map {
             style: this.style,
             zoom: this.zoom,
             center: this.center,
-            interactive: this.interactive,
+            interactive: true,
             maxZoom: 10,
-            maxBounds: this.maxBounds,
+            //maxBounds: this.maxBounds,
             dragPan: true,
             dragRotate:false,
             cooperativeGestures:true
@@ -65,7 +65,7 @@ class Map {
             if (method == 'click') {
                 if (this.clickedId) {
                     this.map.setFeatureState(
-                        { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bb', id: this.clickedId },
+                        { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bbsprawl', id: this.clickedId },
                         { clicked: false }
                     );
                 }
@@ -73,7 +73,7 @@ class Map {
                 this.clickedId = id;
     
                 this.map.setFeatureState(
-                    { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bb', id: this.clickedId },
+                    { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bbsprawl', id: this.clickedId },
                     { clicked: true }
                 );
 
@@ -85,7 +85,7 @@ class Map {
             else {
                 if (this.hoverId) {
                     this.map.setFeatureState(
-                        { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bb', id: this.hoverId },
+                        { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bbsprawl', id: this.hoverId },
                         { hover: false }
                     );
                 }
@@ -93,16 +93,15 @@ class Map {
                 this.hoverId = id;
     
                 this.map.setFeatureState(
-                    { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bb', id: this.hoverId },
+                    { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bbsprawl', id: this.hoverId },
                     { hover: true }
                 );
             }
 
         }
         else{
-
             this.map.setFeatureState(
-                { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bb', id: this.hoverId },
+                { source: 'vector-tiles', sourceLayer: 'PostalDistrictwgs84bbsprawl', id: this.hoverId },
                 { hover: false }
             );
 
@@ -127,7 +126,7 @@ class Map {
         this.bin.forEach(id => {
             this.map.setFeatureState({
                 source: 'vector-tiles',
-                sourceLayer: 'PostalDistrictwgs84bb',
+                sourceLayer: 'PostalDistrictwgs84bbsprawl',
                 id: id,
             }, {
                 clicked: false,

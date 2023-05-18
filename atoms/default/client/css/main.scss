@@ -59,8 +59,8 @@
 #gv-wrapper, #gv-map{
     width: 100%;
     height: auto;
-    min-height: 100vh;
-    max-height: 100vh;
+    min-height: 95vh;
+    max-height: 95vh;
     position: relative;
     z-index: 1;
 }
@@ -104,10 +104,15 @@ table {
     border-radius: 10px;
     padding: 6px;
     background-color: #000;
+    pointer-events: none;
+
+    @include mq($until:desktop){
+        display:none;
+    }
 }
 
 .gv-footnote{
-    width: calc(100% - 10px);
+    width: calc(100% - 20px);
     background-color: white;
     @include fs-textSans(3);
     height: auto;
@@ -121,6 +126,7 @@ table {
     display: inline-block;
     border-bottom: 1px solid #dcdcdc;
     margin-left: 10px;
+    margin-right: 10px;
 
 }
 
@@ -173,4 +179,8 @@ table {
 
   #gv-wrapper{
     overflow: hidden;
+  }
+
+  ul{
+    max-width: 620px;
   }
