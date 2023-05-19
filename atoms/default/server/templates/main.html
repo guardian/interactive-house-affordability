@@ -19,7 +19,7 @@
     <div id="gv-map"></div>
     <div id="gv-map-tooltip"></div>
     <div id="gv-control-panel">
-        <div class="gv-hide-panel">
+        <div class="gv-hide-panel" style="display: none;">
             <span class="gv-hide-panel__text">Hide</span>
             <svg viewBox="-3 -3 30 30" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="m1 7.224 10.498 10.498h1.004L23 7.224l-.98-.954L12 14.708 1.98 6.27 1 7.224Z"></path>
@@ -30,7 +30,7 @@
                 <h4 id="gv-article-header"></h4>
                 <p id="gv-article-paragraph"></p>
             </article>
-            <form id="gv-form" class="gv-tab">
+            <form id="gv-form" class="gv-tab" style="display: none;">
                 <h4 id="gv-article-header">Enter your household information</h4>
                 <p id="gv-article-paragraph">We don't store any data you enter</p>
                 <div class="gv-form__income-wrapper">
@@ -72,15 +72,12 @@
                 </div>
             </div>
         </div>
-        <div id="gv-panel__color-scale_wrapper">
-            
-        </div>
-        <div id="gv-panel__btn_wrapper">
+        <div id="gv-panel__btn_wrapper" style="display: none;">
             <button class="gv-panel-btn" id="prevBtn"></button>
-            <button class="gv-panel-btn" id="nextBtn">Start</button>
+            <button class="gv-panel-btn" id="nextBtn"></button>
         </div>
-    </div>
 
+    </div>
 </div>
 <div class="gv-footnote">
     Guardian graphic. Source: Twentyci for rent and for-sale prices listed from [DATE] to [DATE]. Salary data from ONS for year running to 5 April 2022. For property buying, the tool assumes a deposit of 10% and a mortgage of 90% of house value.

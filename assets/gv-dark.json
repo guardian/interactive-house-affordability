@@ -86,7 +86,7 @@
             "source": "vector-tiles",
             "source-layer": "PostalDistrictwgs84bbsprawl",
             "paint": {
-              "fill-color": "#dadada"
+              "fill-color": "#E6E9EC"
             }
         },
         {

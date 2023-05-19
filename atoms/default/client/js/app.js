@@ -73,13 +73,15 @@ const onMapMove = (event) => {
 
     let tWidth = tooltip.getBoundingClientRect().width;
 
-        if(event.point.x > width/2){
-            tooltip.style.left = event.point.x - tWidth - 10 + 'px'
+        tooltip.style.left = event.point.x + 10 + 'px'
+
+        // if(event.point.x > width/2){
+        //     tooltip.style.left = event.point.x - tWidth - 10 + 'px'
             
-        }
-        else{
-            tooltip.style.left = event.point.x + 10 + 'px'
-        }
+        // }
+        // else{
+        //     tooltip.style.left = event.point.x + 10 + 'px'
+        // }
 
         
         tooltip.style.top = event.point.y + 'px'
@@ -95,7 +97,9 @@ const onMapMove = (event) => {
     }
     else {
 
-        tooltip.innerHTML = event.features[0].properties.PostDist + ' | ' + event.features[0].properties.Sprawl
+        let sprawl = event.features[0].properties.Sprawl ? ' | ' + event.features[0].properties.Sprawl : ''
+
+        tooltip.innerHTML = event.features[0].properties.PostDist + sprawl
 
 
     }
