@@ -123,11 +123,13 @@ option:focus {
     align-self: flex-end;
     position: absolute;
     bottom: 0px;
+    cursor: default;
 
     &.enabled{
         background-color: #000;
         pointer-events: all;
         visibility: visible;
+        cursor: pointer;
     }
 
     @include mq($until:tablet) {
