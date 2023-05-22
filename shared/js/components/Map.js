@@ -35,7 +35,7 @@ class Map {
             interactive: true,
             maxZoom: 10,
             minZoom:this.zoom,
-            //maxBounds: this.maxBounds,
+            maxBounds: this.maxBounds,
             dragPan: true,
             dragRotate:false,
             cooperativeGestures:true
