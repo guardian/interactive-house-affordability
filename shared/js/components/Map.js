@@ -19,6 +19,7 @@ class Map {
         this.onMove = config.onMove;
         this.onLeave = config.onLeave;
         this.onClick = config.onClick;
+        this.onZoomEnd = config.onZoomEnd;
         this.areaSelected = null;
         this.bin = []
         this.isLoaded = false;
@@ -33,6 +34,7 @@ class Map {
             center: this.center,
             interactive: true,
             maxZoom: 10,
+            minZoom:this.zoom,
             //maxBounds: this.maxBounds,
             dragPan: true,
             dragRotate:false,
@@ -52,6 +54,7 @@ class Map {
             this.setAreaSelected(event.features[0].properties.PostDist)
             this.onClick(event)
         })
+        this.map.on('zoomend' , (event) => {this.onZoomEnd(event)})
     }
 
     onEnter(event) {

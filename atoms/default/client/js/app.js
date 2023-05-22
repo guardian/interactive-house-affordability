@@ -74,15 +74,6 @@ const onMapMove = (event) => {
     let tWidth = tooltip.getBoundingClientRect().width;
 
         tooltip.style.left = event.point.x + 10 + 'px'
-
-        // if(event.point.x > width/2){
-        //     tooltip.style.left = event.point.x - tWidth - 10 + 'px'
-            
-        // }
-        // else{
-        //     tooltip.style.left = event.point.x + 10 + 'px'
-        // }
-
         
         tooltip.style.top = event.point.y + 'px'
 
@@ -146,6 +137,12 @@ const onMapClick = (event) => {
 
 }
 
+const onZoomEnd = (event) => {
+    if(map.getMap().getZoom() > zoom)search.enableResetBtn()
+    else search.disableResetBtn()
+    
+}
+
 const map = new Map({
 
     maxBounds: maxBounds,
@@ -159,6 +156,7 @@ const map = new Map({
     onMove: onMapMove.bind(this),
     onLeave: onMapLeave.bind(this),
     onClick: onMapClick.bind(this),
+    onZoomEnd: onZoomEnd.bind(this),
     interactive: true
 
 })
