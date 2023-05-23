@@ -1,0 +1,79 @@
+
+@import "fonts";
+
+.gv-form__deposit-wrapper{
+    margin: 20px 0 20px;
+  font-size: 17px;
+  font-weight: 700;
+  width: 100%;
+  
+  display: flex;
+  flex-wrap: wrap;
+
+  label{
+    color:#121212;
+    @include fs-textSans(3);
+    line-height: 135%;
+    margin-bottom: 4px;
+    width: 100%;
+  }
+}
+
+#gv-deposit-input{
+
+  width: 100%;
+  justify-content:space-between;
+  
+  button{
+    overflow: hidden;
+    border-color: none;
+    box-shadow: none;
+    outline: 0 none;
+    max-height: 45px;
+    list-style: none;
+    width: calc(100%/4.2);
+    height: 45px;
+    border-radius: 6px;
+    border: 1px solid #dadada;
+    background: white;
+    font-weight: bold;
+    cursor: pointer;
+
+    &.selected{
+      color: #fff;
+      background-color: #000;
+    }
+  } 
+
+}
+
+#gv-deposit-input::-moz-focus-inner {
+  border: 0;
+}
+#gv-deposit-input:focus {
+  outline: none;
+}
+#gv-deposit-input option{
+  @include fs-textSans(3);
+  font-size: 17px;
+  font-weight: 700;
+  color: #707070;
+  min-width: calc((100% / 4) - 3px);
+  height: 44px;
+  padding: 10px 0;
+  text-align: center;
+  margin-right: 4px;
+  display: inline-block;
+  cursor: pointer;
+  border:#707070 solid 1px;
+  border-radius: 4px;
+}
+
+.gv-tab {
+  display: inline-block;
+
+  select
+  {
+    scrollbar-width: none;  
+  }
+}

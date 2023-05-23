@@ -25,7 +25,7 @@
             "id": "background",
             "type": "background",
             "paint": {
-                "background-color": "#E6E9EC"
+                "background-color": "#ffffff"
             }
         },
         {
@@ -47,7 +47,7 @@
                 ]
             ],
             "paint": {
-                "line-color": "#b3b3b4"
+                "line-color": "#dadada"
             }
         },
         {
@@ -77,7 +77,7 @@
                 "visibility": "visible"
             },
             "paint": {
-                "fill-color": "#fafafa"
+                "fill-color": "#dadada"
             }
         },
         {

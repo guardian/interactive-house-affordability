@@ -9,7 +9,11 @@ class Expression {
         this.data = config.data;
         this.salary = config.salary || null;
         this.rooms = config.rooms || null;
+        this.deposit = config.deposit || .9;
         this.matchExpression = ["match", ["get", "PostDist"]];
+        this.orgData = [['PostDist', 'color']];
+        
+
         this.scale = scaleThreshold()
         .range(['#a50b06' , '#e25d28', '#ffaf81', '#fff700', '#88cfc8' , '#329890', '#135e58' ])
         .domain([0,1,2,3,4,5,6]);
@@ -54,7 +58,7 @@ class Expression {
                 }
             })
 
-            this.matchExpression.push('#E6E9EC');
+            this.matchExpression.push('#ffffff');
         }
         else{
 
@@ -64,13 +68,31 @@ class Expression {
 
                         let color = this.getColor(+d.median_pay_per_LA_x2,d['AllSale_MedianPrice'],+d['AllRent_MedianPrice'], d['Use?'])
 
+                        this.orgData.push([d.Postcode_District,color])
+
                         this.matchExpression.push(d.Postcode_District, color);
 
                     }
 
             })
 
-            this.matchExpression.push('#E6E9EC');
+            // let csv = "data:text/csv;charset=utf-8," 
+            // + this.orgData.map(e => e.join(",")).join("\n");
+
+            // console.log(csv)
+
+            // var encodedUri = encodeURI(csv);
+            // var link = document.createElement("a");
+            // link.innerHTML='Click to download'
+            // link.classList.add('gv-data-download')
+            // link.setAttribute("href", encodedUri);
+            // link.setAttribute("download", "my_data.csv");
+            // document.body.appendChild(link); // Required for FF
+
+            // link.click(); // This will download the data file named "my_data.csv".
+
+
+            this.matchExpression.push('#ffffff');
         }
 
     }
@@ -85,36 +107,36 @@ class Expression {
         let color;
 
         if(sale_price == 0 || rent_price == 0){
-            color = '#E6E9EC'
+            color = '#ffffff'
             return color
         }
 
         if (use == '-') {
-            return '#E6E9EC'
+            return '#ffffff'
         }
-        else if (rent_price <= ((salary / 12) * 0.3) && sale_price * 0.9 <= salary * 2.5) {
+        else if (rent_price <= ((salary / 12) * 0.3) && sale_price * this.deposit <= salary * 2.5) {
             return this.palette(5)
         }
-        else if (rent_price <= ((salary / 12) * 0.3) && sale_price * 0.9 > salary * 2.5 && sale_price * 0.9 <= salary * 3.5) {
+        else if (rent_price <= ((salary / 12) * 0.3) && sale_price * this.deposit > salary * 2.5 && sale_price * this.deposit <= salary * 3.5) {
             return this.palette(4)
         }
-        else if (rent_price <= ((salary / 12) * 0.3) && sale_price * 0.9 > salary * 3.5 && sale_price * 0.9 <= salary * 4.5) {
+        else if (rent_price <= ((salary / 12) * 0.3) && sale_price * this.deposit > salary * 3.5 && sale_price * this.deposit <= salary * 4.5) {
             return this.palette(3)
         }
-        else if (sale_price * 0.9 > salary * 4.5 && rent_price <= (salary / 12) * 0.2) {
+        else if (sale_price * this.deposit > salary * 4.5 && rent_price <= (salary / 12) * 0.2) {
             return this.palette(1)
         }
-        else if (sale_price * 0.9 > salary * 4.5 && rent_price > (salary / 12) * 0.2 && rent_price <= ((salary / 12) * 0.3)) {
+        else if (sale_price * this.deposit > salary * 4.5 && rent_price > (salary / 12) * 0.2 && rent_price <= ((salary / 12) * 0.3)) {
             return this.palette(0)
         }
-        else if (sale_price * 0.9 > salary * 4.5 && rent_price > ((salary / 12) * 0.3)) {
+        else if (sale_price * this.deposit > salary * 4.5 && rent_price > ((salary / 12) * 0.3)) {
             return this.palette(-1)
         }
-        else if (sale_price * 0.9 <= salary * 4.5 && rent_price > ((salary / 12) * 0.3)) {
+        else if (sale_price * this.deposit <= salary * 4.5 && rent_price > ((salary / 12) * 0.3)) {
             return this.palette(2)
         }
         else {
-            return '#E6E9EC'
+            return '#ffffff'
         }
 
     }

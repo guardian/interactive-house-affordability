@@ -23,6 +23,7 @@ const tooltip = document.querySelector('#gv-map-tooltip');
 const salaryInput = document.querySelector('#gv-salary-input')
 const salaryErrorMessage = document.querySelector('#gv-salary__error-mesage');
 const bedroomsSelect = document.querySelector('#gv-bedrooms-input')
+const depositSelect = document.querySelector('#gv-deposit-input')
 const next = document.querySelector('#nextBtn')
 const prev = document.querySelector('#prevBtn')
 const tabs = document.querySelectorAll('.gv-tab')
@@ -48,7 +49,7 @@ const buttonNames = [
 
 const searchInput = document.querySelector('#gv-search-box')
 
-const placeHolder = 'Enter postcode'
+const placeHolder = 'Enter first part of postcode (e.g. N1)'
 const searchErrorMessage = document.querySelector('#gv-location__error-mesage');
 const codes = postcodes;
 const resetBtn = document.querySelector('.gv-location-reset__btn');
@@ -127,7 +128,6 @@ const onMapClick = (event) => {
             isMobile ? nav.showPanel() : null
             onNavChange(2)
             map.highlightArea(event.features[0].id, 'click')
-            search.enableResetBtn()
 
         }
     }
@@ -163,8 +163,6 @@ const map = new Map({
 
 const searchOnResult = (result) => {
 
-    console.log('searchOnResult')
-
     if (result) {
         if (result.value) {
 
@@ -184,7 +182,6 @@ const searchOnResult = (result) => {
                 if (match[rooms + 'Bed_USE'] != '-') {
                     map.setAreaSelected(selectedId)
                     map.zoomTo([[maxx, maxy], [minx, miny]])
-                    search.enableResetBtn()
                     map.highlightArea()
                     nav.setStep(2)
                     isMobile ? nav.showPanel() : null
@@ -198,8 +195,6 @@ const searchOnResult = (result) => {
         }
     }
     else {
-
-        console.log('no result')
         map.reset()
         map.clean()
         onNavChange(2)
@@ -245,7 +240,7 @@ const onNavChange = (step) => {
         map.clean()
         form.reset()
         nav.enable(next)
-        search.disableResetBtn()
+        //search.disableResetBtn()
         //search.reset()
 
         article.setData({
@@ -269,6 +264,7 @@ const onNavChange = (step) => {
         let match = data.find(f => f.Postcode_District === area);
         let salary = form.salary.getSalary().value;
         let rooms = form.rooms.getRooms().value;
+        let deposit = form.deposit.getDeposit().value;
         let roomsStr = ""
 
         switch(rooms){
@@ -353,7 +349,7 @@ const onNavChange = (step) => {
             }
         }
 
-        let expression = new Expression({ data: data, salary: salary, rooms: rooms })
+        let expression = new Expression({ data: data, salary: salary, rooms: rooms, deposit: deposit })
         map.paint(expression.getExpression())
     }
 }
@@ -392,5 +388,6 @@ const form = new Form({
     salaryInput: salaryInput,
     errorMessage: salaryErrorMessage,
     bedroomsSelect: bedroomsSelect,
+    depositSelect: depositSelect,
     callback: onFormChange
 })
