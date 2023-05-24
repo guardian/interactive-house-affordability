@@ -10,9 +10,10 @@ class Rooms{
         this.select.querySelectorAll('#gv-bedrooms-input button').forEach((element,i) => {
             element.addEventListener('click', (event) => {
 
-                this.setRooms(i+1)
-                this.onSelect(i+1)
+                this.setRooms(i)
+                this.onSelect(i)
                 event.preventDefault();
+
             })
         });
 
@@ -25,7 +26,7 @@ class Rooms{
             this.select.querySelectorAll(`#gv-bedrooms-input button`)[i].classList.remove('selected')
         }
 
-        this.select.querySelectorAll(`#gv-bedrooms-input button`)[value-1].classList.add('selected')
+        this.select.querySelectorAll(`#gv-bedrooms-input button`)[value].classList.add('selected')
 
         this.callback(this.rooms)
     }
@@ -44,6 +45,9 @@ class Rooms{
 
             this.select.querySelectorAll('#gv-bedrooms-input button')[i].classList.remove('selected')
         }
+
+        this.select.querySelectorAll(`button`)[0].classList.add('selected')
+        
         this.setRooms(0);
     }
 

@@ -4,13 +4,14 @@ class Deposits{
 
         this.select = config.depositSelect;
         this.callback = config.callback || null;
+        this.deposits = [.9,.85,.8]
 
-        this.setDeposit(1);
+        this.setDeposit(this.deposits[0]);
 
         this.select.querySelectorAll('button').forEach((element,i) => {
             element.addEventListener('click', (event) => {
 
-                this.setDeposit(i+1)
+                this.setDeposit(this.deposits[i])
                 this.onSelect(i+1)
                 event.preventDefault();
             })
@@ -19,8 +20,6 @@ class Deposits{
     }
 
     onSelect(value){
-
-        console.log('onselect deposit')
 
         for(let i = 0; i < this.select.querySelectorAll(`button`).length; i++){
 
@@ -42,8 +41,6 @@ class Deposits{
 
     reset(){
 
-        console.log('reset deposit')
-
         for(let i = 0; i < this.select.querySelectorAll('button').length; i++){
 
             this.select.querySelectorAll('button')[i].classList.remove('selected')
@@ -51,7 +48,7 @@ class Deposits{
 
         this.select.querySelectorAll(`button`)[0].classList.add('selected')
 
-        this.setDeposit(1);
+        this.setDeposit(this.deposits[0]);
     }
 
 }

@@ -49,7 +49,7 @@ const buttonNames = [
 
 const searchInput = document.querySelector('#gv-search-box')
 
-const placeHolder = 'Enter first part of postcode (e.g. N1)'
+const placeHolder = 'Enter first part of postcode'
 const searchErrorMessage = document.querySelector('#gv-location__error-mesage');
 const codes = postcodes;
 const resetBtn = document.querySelector('.gv-location-reset__btn');
@@ -265,9 +265,13 @@ const onNavChange = (step) => {
         let salary = form.salary.getSalary().value;
         let rooms = form.rooms.getRooms().value;
         let deposit = form.deposit.getDeposit().value;
+        let depositStr = 100 - (deposit * 100)
         let roomsStr = ""
 
         switch(rooms){
+            case 0:
+                roomsStr = 'any';
+                break
             case 1:
                 roomsStr = 'one';
                 break
@@ -309,11 +313,10 @@ const onNavChange = (step) => {
         }
         else {
 
+            if (salary && rooms>=0 /*&& match[rooms + 'Bed_USE'] != '-'*/) {
 
-            if (salary && rooms && match[rooms + 'Bed_USE'] != '-') {
-
-                let housePrice = match[`${rooms}BedSale_MedianPrice`];
-                let houseRent = match[`${rooms}BedRent_MedianPrice`];
+                let housePrice = rooms > 0 ? match[`${rooms}BedSale_MedianPrice`] : match.AllSale_MedianPrice;
+                let houseRent = rooms > 0 ?  match[`${rooms}BedRent_MedianPrice`] : match.AllRent_MedianPrice;
 
                 tabs[2].style.display = 'block';
                 tabs[0].style.display = 'none';
@@ -321,12 +324,12 @@ const onNavChange = (step) => {
                 table.setData({
                     header: area,
                     subheader:match['Town/Area'],
-                    standfirst: `Housing affordability for £${numberWithCommas(salary)} household income and ${rooms}-bedroom properties. Median figures for ${rooms}-bedroom properties only.`,
-                    housePrice: '£' + numberWithCommas(housePrice),
-                    annualIncome:'Mortgage ' +  numberWithCommas(((housePrice * .9) / salary).toFixed(1)) + ' times annual income*',
-                    rentPrice: '£' + numberWithCommas(match[`${rooms}BedRent_MedianPrice`]),
+                    standfirst: `Housing affordability for £${numberWithCommas(salary)} household income and ${roomsStr == 'any' ? 'the median property' : roomsStr + '-bedroom properties'}. ${roomsStr == 'any' ? '' : 'Median figures for ' + roomsStr + '-bedroom properties only.'}`,
+                    housePrice: `£${housePrice % 1 == 0 ? numberWithCommas(housePrice) : numberWithCommas(Number(housePrice).toFixed(2))}`,
+                    annualIncome:'Mortgage ' +  numberWithCommas(((housePrice * deposit) / salary).toFixed(1)) + ' times annual income*',
+                    rentPrice: `£${houseRent % 1 == 0 ? numberWithCommas(houseRent) : numberWithCommas(Number(houseRent).toFixed(2))}`,
                     percentincome: Math.round((houseRent * 100) / ((salary) / 12)) + '% of monthly income',
-                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area.`
+                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area. *Assumes ${depositStr}% deposit.`
                 })
             }
             else {
@@ -338,11 +341,11 @@ const onNavChange = (step) => {
                     header: area,
                     subheader:match['Town/Area'],
                     standfirst: `Housing affordability for the median local household income of £${numberWithCommas(match.median_pay_per_LA_x2)} and the median property.`,
-                    housePrice: '£' + numberWithCommas(match.AllSale_MedianPrice),
-                    annualIncome:'Mortgage ' +  numberWithCommas(((match.AllSale_MedianPrice * .9) / match.median_pay_per_LA_x2).toFixed(1)) + ' times annual income',
-                    rentPrice: '£' + numberWithCommas(match.AllRent_MedianPrice),
+                    housePrice: `£${match.AllSale_MedianPrice % 1 == 0 ? numberWithCommas(match.AllSale_MedianPrice) : numberWithCommas(Number(match.AllSale_MedianPrice).toFixed(2))}`,
+                    annualIncome:'Mortgage ' +  numberWithCommas(((match.AllSale_MedianPrice * deposit) / match.median_pay_per_LA_x2).toFixed(1)) + ' times annual income*',
+                    rentPrice: `£${match.AllRent_MedianPrice % 1 == 0 ? numberWithCommas(match.AllRent_MedianPrice) : numberWithCommas(Number(match.AllRent_MedianPrice).toFixed(2))}`,
                     percentincome: Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2) / 12)) + '% of monthly income',
-                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area. *Assumes 10% deposit.`
+                    label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area. *Assumes ${depositStr}% deposit.`
                 })
 
                 nav.name(prev, 'Compare your household')

@@ -98,3 +98,21 @@
 // #gv-table__annual-income,#gv-table__percent-income{
 //     font-size: 14px;
 // }
+
+.gv-table-footnote{
+    width: 100%;
+    max-width: 620px;
+    background-color: white;
+    @include fs-textSans(3);
+    height: auto;
+    min-height: 20px;
+    margin-top:4px;
+    margin-bottom: 2px;
+    padding: 6px 0 6px 0;
+    font-size: 12px;
+    line-height: 15px;
+    color: #767676;
+    display: inline-block;
+    border-bottom: 1px solid #dcdcdc;
+
+}

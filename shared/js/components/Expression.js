@@ -8,7 +8,7 @@ class Expression {
         
         this.data = config.data;
         this.salary = config.salary || null;
-        this.rooms = config.rooms || null;
+        this.rooms = config.rooms;
         this.deposit = config.deposit || .9;
         this.matchExpression = ["match", ["get", "PostDist"]];
         this.orgData = [['PostDist', 'color']];
@@ -18,7 +18,7 @@ class Expression {
         .range(['#a50b06' , '#e25d28', '#ffaf81', '#fff700', '#88cfc8' , '#329890', '#135e58' ])
         .domain([0,1,2,3,4,5,6]);
 
-        if(this.salary && this.rooms) {
+        if(this.salary && this.rooms >= 0) {
 
             this.data.forEach(d => {
 
@@ -50,6 +50,11 @@ class Expression {
                         salePrice = +d['4BedSale_MedianPrice'];
                         rentPrice = +d['4BedRent_MedianPrice'];
                         use = d['4Bed_USE'];
+                    }
+                    else if(this.rooms == 0){
+                        salePrice = +d['AllSale_MedianPrice'];
+                        rentPrice = +d['AllRent_MedianPrice'];
+                        use = d['Use?'];
                     }
 
                     let color = this.getColor(this.salary, salePrice, rentPrice, use)
