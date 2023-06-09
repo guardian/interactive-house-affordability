@@ -45,7 +45,7 @@
 
     @include mq($until:desktop) {
         min-width: calc(100% - 8px);
-        margin: 4px 4px 0 4px;
+        margin: 4px 4px 0 4px!important;
     }
 
     @include mq(desktop) {
@@ -85,6 +85,10 @@
     background: white;
     font-weight: normal;
     width: 100%;
+
+    input{
+        width: 100% !important;
+    }
 }
 
 #gv-location__error-mesage {

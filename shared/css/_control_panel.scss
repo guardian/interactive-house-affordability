@@ -176,8 +176,8 @@
         border-radius: 10px 10px 0 0;
         cursor: pointer;
         span{
-            font-family: GuardianTextSans, Guardian Text Sans Web, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-            font-size: 0.9375rem;
+            @include fs-textSans(3);
+            font-size: 14px;
             line-height: 1.35;
             font-weight: 700;
             --source-text-decoration-thickness: 2px;

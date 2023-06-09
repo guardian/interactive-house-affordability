@@ -9,37 +9,17 @@
 /*----- Vertical scrollbar width used for sizing full viewport width elements -----*/
 
 [data-atom-id="interactives/2023/02/interactive-house-affordability/table"]{
-    border-top: 1px solid #bababa;
+    border-top: 1px solid #DCDCDC;
     background-color: white;
 
 }
 
 .main-grid{
-    border-top: 1px solid #dadada;
     width: 100%;
     background-color: white;
     display: grid;
 
 }
-
-// .main-container{
-
-//     max-width: 1300px;
-//     margin-left: 0;
-//     grid-column-gap: 10px;
-
-//     grid-template-columns: 219px 1px 1fr;
-// grid-template-areas:
-// 'title border headline  ' 
-// '.   border standfirst' 
-// '.   border media   ' 
-// '.   border media   ' 
-// '.   border lines   ' 
-// '.   border meta    ' 
-// 'body  body   body    ' 
-// '.   .    .     ';
-      
-// }
 
 .main-grid {
     box-sizing: border-box;
@@ -117,19 +97,21 @@
     td{
         vertical-align:top;
         height: 100%;
-        max-height: 20px;
+        //max-height: 20px;
         line-height: 18px!important;
+        padding-right: 8px;
     }
 
 
     tr td:not(:first-child){
         //padding-left: 10px;
         padding: 4px 8px 10px 0;
+        
 
         @include mq($until:desktop){
-            padding: 0;
+            padding: 0 8px 8px 0;
         }
-       // border-bottom: 1px solid #bababa;
+       // border-bottom: 1px solid #DCDCDC;
     }
 
     th{
@@ -161,6 +143,10 @@
 
 }
 
+.prose table td{
+    border-top: 0px;
+}
+
 
 #color1{background-color: #135e58;}
 #color2{background-color: #329890;}
@@ -174,7 +160,7 @@
 .gv-color-key-table__header{
     padding: 6px 0 10px 0;
     margin: 0;
-    font-family: 'GH Guardian Headline', Georgia, serif;
+    @include fs-headline(1);
     font-size: 18px;
     font-weight: 700;
     line-height: 22px;

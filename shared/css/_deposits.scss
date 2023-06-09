@@ -38,6 +38,8 @@
     background: white;
     font-weight: bold;
     cursor: pointer;
+    @include fs-textSans(3);
+    font-size: 14px;
 
     &.selected{
       color: #fff;
