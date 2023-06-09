@@ -22,23 +22,78 @@
 
 }
 
-.main-container{
+// .main-container{
 
-    max-width: 1300px;
-    margin-left: 0;
-    grid-column-gap: 10px;
+//     max-width: 1300px;
+//     margin-left: 0;
+//     grid-column-gap: 10px;
 
-    grid-template-columns: 219px 1px 1fr;
-grid-template-areas:
-'title border headline  ' 
-'.   border standfirst' 
-'.   border media   ' 
-'.   border media   ' 
-'.   border lines   ' 
-'.   border meta    ' 
-'body  body   body    ' 
-'.   .    .     ';
+//     grid-template-columns: 219px 1px 1fr;
+// grid-template-areas:
+// 'title border headline  ' 
+// '.   border standfirst' 
+// '.   border media   ' 
+// '.   border media   ' 
+// '.   border lines   ' 
+// '.   border meta    ' 
+// 'body  body   body    ' 
+// '.   .    .     ';
       
+// }
+
+.main-grid {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
+
+    @include mq($from: tablet, $until: desktop) {
+        max-width: 740px;
+    }
+
+    @include mq($from: desktop, $until: leftCol) {
+        max-width: 980px;
+    }
+
+    @include mq($from: leftCol, $until: wide) {
+        max-width: 1140px;
+    } 
+
+    @include mq($from: wide) {
+        max-width: 1300px;
+    } 
+
+    @include mq($until: mobileLandscape) {
+        padding: 0 10px;
+    }
+
+    @include mq($from: mobileLandscape, $until: tablet) {
+        padding: 0 20px;
+    }
+
+    @include mq($from: tablet) {
+        padding: 0 1px;
+    }
+}
+
+.main-container {
+    box-sizing: border-box;
+    width: 100%;
+
+    @include mq($from: tablet) {
+        max-width: 620px;
+    }
+
+    @include mq($from: tablet, $until: leftCol) {
+        margin-left: 20px;
+    }
+
+    @include mq($from: leftCol, $until: wide) {
+        margin-left: 180px;
+    }
+
+    @include mq($from: wide) {
+        margin-left: 260px;
+    }
 }
 
 .table-container{
