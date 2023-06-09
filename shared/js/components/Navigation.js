@@ -31,7 +31,7 @@ class Navigation{
             this.hide(this.next)
         }
         else if(this.index <= 0){
-            console.log('nav = 0')
+
             this.index = 0;
             this.hide(this.prev)
         }

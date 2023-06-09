@@ -4,27 +4,24 @@ class Map {
 
     constructor(config) {
 
-        this.bounds = config.bounds;
         this.maxBounds = config.maxBounds;
         this.container = config.container;
         this.style = config.style;
         this.zoom = config.zoom;
         this.center = config.center;
-        this.interactive = config.interactive;
-        this.layer = config.layer;
-        this.hoverId = null;
-        this.clickedId = null;
         this.tooltip = config.tooltip;
+        this.layer = config.layer;
         this.onLoaded = config.onLoaded;
         this.onMove = config.onMove;
         this.onLeave = config.onLeave;
         this.onClick = config.onClick;
         this.onZoomEnd = config.onZoomEnd;
+
+        this.hoverId = null;
+        this.clickedId = null;
         this.areaSelected = null;
         this.bin = []
         this.isLoaded = false;
-
-        this.interval = null;
 
         this.map = new mapGl({
 
@@ -42,9 +39,6 @@ class Map {
         });
 
         this.map.touchZoomRotate.disableRotation();
-        
-
-        this.source = this.map.getSource('vector-tiles');
 
         this.map.on("load", (event) => { this.onLoaded(); this.isLoaded = true })
         this.map.on('mousemove', this.layer, (event) => { this.onMove(event) })

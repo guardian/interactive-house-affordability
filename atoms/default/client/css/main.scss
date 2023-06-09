@@ -59,6 +59,7 @@
 #gv-wrapper, #gv-map{
     width: 100%;
     height: auto;
+    overflow: hidden;
     
     @include mq($from: 100px,  $until: desktop){
         min-height: 100vh;
@@ -140,141 +141,10 @@ table {
     max-width: 620px!important;
 }
 
-[title='unaffordable areas']{
+[title='Small multiple maps that show just how many places are affordable for local residents']{
     max-width: 860px!important;
 }
 
-
-
-.gv-hide-panel{
-    display: none;
-
-    @include mq($from: 100px,  $until: desktop) {
-        width: auto;
-        display: flex !important;
-        -moz-box-align: center;
-        align-items: center;
-        position: absolute;
-        top: -32px;
-        right: 5px;
-        color: #fff;
-        background-color: #000;
-        padding: 6px 8px 6px 8px;
-        border-radius: 10px 10px 0 0;
-        cursor: pointer;
-        span{
-            font-family: GuardianTextSans, Guardian Text Sans Web, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
-            font-size: 0.9375rem;
-            line-height: 1.35;
-            font-weight: 700;
-            --source-text-decoration-thickness: 2px;
-        }
-    
-        svg{
-            width: 18px;
-            height: 18px;
-            fill:white;
-
-            transform: translate(0px);
-            transition: transform 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53) 0s;
-        }
-    }
-
-   
-  }
-
-  #gv-wrapper{
-    overflow: hidden;
-  }
-
-  ul{
-    max-width: 620px;
-  }
-
-//   .gv-color-key-table{
-//     background-color: #000;
-//     color: #fff;
-//     font-size: 12px;
-//     @include fs-textSans(3);
-//     //position: absolute;
-//     top:0;
-//     border-collapse: separate;
-//     max-width: 620px;
-
-//     #color1{ background-color: #135e58;}
-//     #color2{ background-color: #329890;}
-//     #color3{ background-color: #88cfc8;}
-//     #color5{ background-color: #ffaf81;}
-//     #color6{ background-color: #e25d28;}
-//     #color7{ background-color: #a50b06;}
-//     #color4{ background-color: #fff700;}
-    
-//   }
-
-//   .gv-color-key-table tbody tr td{
-//     padding:5px 0 5px 8px;
-//     border-bottom:1px solid #e0e0e0;
-//     text-align: left;
-// }
-
-// .gv-color-key-table tbody tr:last-child td{
-//     border-bottom: none;
-// }
-
-// .gv-color-key-table__header{
-//     padding: 6px 0 10px 0;
-//     margin: 0;
-//     font-family: 'GH Guardian Headline', Georgia, serif;
-//     font-size: 18px;
-//     font-weight: 700;
-//     line-height: 22px;
-//     color: #121212;
-    
-// }
-
-// .gv-color-key-table__subheader{
-
-//     padding: 0 0 25px 0;
-//     margin: 0;
-//     @include fs-textSans(3);
-//     font-size: 14px;
-//     font-weight: 200;
-//     line-height: 18px;
-//     color: #121212;
-
-// }
-
-// .gv-color-key-table th{
-//     @include fs-textSans(3);
-//     font-weight: bold;
-//     font-size: 14px;
-//     text-align: left;
-//     padding:0px 0 10px 8px;
-
-//     p{
-//         font-weight: 300;
-//     }
-// }
-
-// .gv-color-key-table__header{
-//     color: white;
-//     background-color: #000;
-//     padding: 8px;
-// }
-
-// .masked-image{
-//     position: absolute;
-//     bottom: 0;
-//     clip-path: circle(20px at 90% 89%);
-//     height: 400px;
-//     transition: clip-path 1s;
-//     width: 100%;
-//     right:0;
-
-//     z-index: 1000000;
-
-//   }
-  
-//   .masked-image:hover {
-//     clip-path: circle(175%);
-//   }
+[data-atom-id="interactives/2023/02/interactive-house-affordability/table"]{
+    margin-bottom: 0px!important;
+}

@@ -116,10 +116,16 @@ class Search{
     }
 
     reset(){
+        console.log('search reset')
         this.search = null
         this.input.value = ''
         this.disableResetBtn()
         this.callback()
+        this.autoComplete.data.src = this.data;
+        
+    }
+
+    restart(){
         this.autoComplete.data.src = this.data;
     }
 

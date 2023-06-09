@@ -163,7 +163,11 @@ const map = new Map({
 
 const searchOnResult = (result) => {
 
+    console.log(result)
+
     if (result) {
+
+        console.log('reset zoom with input data')
         if (result.value) {
 
             let selectedId = result.value
@@ -195,6 +199,7 @@ const searchOnResult = (result) => {
         }
     }
     else {
+        console.log('reset zoom with no input data')
         map.reset()
         map.clean()
         onNavChange(2)
@@ -232,6 +237,8 @@ const onNavChange = (step) => {
         nav.show(n.button)
     })
 
+    search.restart()
+
     if (step == 0) {
 
         let expression = new Expression({ data: data })
@@ -240,25 +247,23 @@ const onNavChange = (step) => {
         map.clean()
         form.reset()
         nav.enable(next)
-        //search.disableResetBtn()
-        //search.reset()
+        nav.setStep(0)
 
         article.setData({
-            header: 'Where can you afford to buy or rent in Britain?',
-            paragraph: `Click on a postcode district to see its average house prices compared with the typical income of local residents. Or compare with your own household income below.`
+            header: 'Where can you afford to buy or rent in Great Britain?',
+            paragraph: `Click on a postcode district to see its property prices compared with the typical income of local dual-earner households. Or compare with your own household income below.`
         })
     }
 
     if (step == 1 && !form.getValid()) {
-        //map.reset()
         nav.disable(next)
     }
     else if (step == 1 && form.getValid()) {
-        //map.reset()
         nav.enable(next)
     }
 
     if (step == 2) {
+        
 
         let area = map.getAreaSelected();
         let match = data.find(f => f.Postcode_District === area);
@@ -267,6 +272,7 @@ const onNavChange = (step) => {
         let deposit = form.deposit.getDeposit().value;
         let depositStr = 100 - (deposit * 100)
         let roomsStr = ""
+
 
         switch(rooms){
             case 0:
@@ -305,15 +311,17 @@ const onNavChange = (step) => {
             }
             else if(!salary && rooms == 0){
 
-                article.setData({
-                    header: 'Where can you afford to buy or rent in Britain?',
-                    paragraph: `Click on a postcode district to see its average house prices compared with the typical income of local residents. Or compare with your own household income below.`
-                })
+                onNavChange(0)
+
             }
         }
         else {
 
-            if (salary && rooms>=0 /*&& match[rooms + 'Bed_USE'] != '-'*/) {
+            console.log('i got area')
+
+            if (salary && rooms>=0) {
+
+                console.log('area selected and salray and rooms')
 
                 let housePrice = rooms > 0 ? match[`${rooms}BedSale_MedianPrice`] : match.AllSale_MedianPrice;
                 let houseRent = rooms > 0 ?  match[`${rooms}BedRent_MedianPrice`] : match.AllRent_MedianPrice;
@@ -347,6 +355,8 @@ const onNavChange = (step) => {
                     percentincome: Math.round((match.AllRent_MedianPrice * 100) / ((match.median_pay_per_LA_x2) / 12)) + '% of monthly income',
                     label: `As the majority of areas in this postcode district fall in ${match.LA} local authority the calculations are based on the median gross earnings of a couple in this council area. *Assumes ${depositStr}% deposit.`
                 })
+
+                console.log('area selected but no salray and rooms')
 
                 nav.name(prev, 'Compare your household')
             }

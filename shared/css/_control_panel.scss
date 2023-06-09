@@ -159,3 +159,39 @@
     @include fs-textSans(1);
 }
 
+.gv-hide-panel{
+    display: none;
+
+    @include mq($from: 100px,  $until: desktop) {
+        width: auto;
+        display: flex !important;
+        -moz-box-align: center;
+        align-items: center;
+        position: absolute;
+        top: -32px;
+        right: 5px;
+        color: #fff;
+        background-color: #000;
+        padding: 6px 8px 6px 8px;
+        border-radius: 10px 10px 0 0;
+        cursor: pointer;
+        span{
+            font-family: GuardianTextSans, Guardian Text Sans Web, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+            font-size: 0.9375rem;
+            line-height: 1.35;
+            font-weight: 700;
+            --source-text-decoration-thickness: 2px;
+        }
+    
+        svg{
+            width: 18px;
+            height: 18px;
+            fill:white;
+
+            transform: translate(0px);
+            transition: transform 0.2s cubic-bezier(0.64, 0.57, 0.67, 1.53) 0s;
+        }
+    }
+
+   
+  }

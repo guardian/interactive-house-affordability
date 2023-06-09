@@ -1,61 +1,84 @@
+<div class="main-grid">
+<div class="main-container">
+    <div class="table-container">
+        <table class="gv-color-key-table">
+            <h1 class="gv-color-key-table__header">How we define what is affordable for you</h1>
+            <tr>
+                <th></th>
+                <th>Category*</th>
+                <th>Mortgage cost (90% of house)
+                    <p>As number of times annual income</p>
+                </th>
+                <th>Rent cost
+                    <p>As % of monthly income</p>
+                </th>
+            </tr>
+            <tr class="line">
+                <td>
+                    <div class='key-box' id="color1"></div>
+                </td>
+                <td>Can buy, can rent</td>
+                <td id="gv-color-key-table__house-price">2.5 times and below</td>
+                <td id="gv-color-key-table__annual-income">30% and below</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class='key-box' id="color2"></div>
+                </td>
+                <td></td>
+                <td id="gv-color-key-table__house-price">3.5 times and below</td>
+                <td id="gv-color-key-table__annual-income">30% and below</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class='key-box' id="color3"></div>
+                </td>
+                <td></td>
+                <td id="gv-color-key-table__house-price">4.5 times and below</td>
+                <td id="gv-color-key-table__annual-income">30% and below</td>
+            </tr>
+            <tr class="line">
+                <td>
+                    <div class='key-box' id="color5"></div>
+                </td>
+                <td>Can't buy, can rent</td>
+                <td id="gv-color-key-table__house-price">Greater than 4.5 times</td>
+                <td id="gv-color-key-table__annual-income">20% and below</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class='key-box' id="color6"></div>
+                </td>
+                <td></td>
+                <td id="gv-color-key-table__house-price">Greater than 4.5 times</td>
+                <td id="gv-color-key-table__annual-income">30% and below</td>
+            </tr>
+            <tr class="line">
+                <td>
+                    <div class='key-box' id="color7"></div>
+                </td>
+                <td>Can't buy, can't rent</td>
+                <td id="gv-color-key-table__house-price">Greater than 4.5 times</td>
+                <td id="gv-color-key-table__annual-income">Greater than 30%</td>
+            </tr>
 
-    <table class="gv-color-key-table">
-        <h1 class="gv-color-key-table__header">How we define what is affordable for you</h1>
-        <tr>
-            <th></th>
-            <th></th>
-            <th>Mortgage cost (ie. 90% of house price*)
-                <p>As number of times annual income</p>
-            </th>
-            <th>Rent cost
-                <p>As % of monthly income</p>
-            </th>
-        </tr>
-        <tr>
-            <td class='key-box' id="color1" style="width: 3px"></td>
-            <td class="gv-color-key-table__description">Can buy, can rent</td>
-            <td id="gv-color-key-table__house-price">Less than (and inc.) 2.5 times</td>
-            <td id="gv-color-key-table__annual-income">Less than (and inc.) 30%</td>
-        </tr>
-        <tr>
-            <td class='key-box' id="color2"></td>
-            <td class="gv-color-key-table__description">Can buy, can rent</td>
-            <td id="gv-color-key-table__house-price">Less than (and inc.) 3.5 times</td>
-            <td id="gv-color-key-table__annual-income">Less than (and inc.) 30%</td>
-        </tr>
-        <tr>
-            <td class='key-box' id="color3"></td>
-            <td class="gv-color-key-table__description">Can buy, can rent</td>
-            <td id="gv-color-key-table__house-price">Less than (and inc.) 4.5 times</td>
-            <td id="gv-color-key-table__annual-income">Less than (and inc.) 30%</td>
-        </tr>
-        <tr>
-            <td class='key-box' id="color5"></td>
-            <td class="gv-color-key-table__description">Can't buy, can rent</td>
-            <td id="gv-color-key-table__house-price">Greater than 4.5 times</td>
-            <td id="gv-color-key-table__annual-income">Less than (and inc.) 20%</td>
-        </tr>
-        <tr>
-            <td class='key-box' id="color6"></td>
-            <td class="gv-color-key-table__description">Can't buy, can rent</td>
-            <td id="gv-color-key-table__house-price">Greater than 4.5 times</td>
-            <td id="gv-color-key-table__annual-income">Less than (and inc.) 30%</td>
-        </tr>
-        <tr>
-            <td class='key-box' id="color7"></td>
-            <td class="gv-color-key-table__description">Can't buy, can't rent</td>
-            <td id="gv-color-key-table__house-price">Greater than 4.5 times</td>
-            <td id="gv-color-key-table__annual-income">Greater than 30%</td>
-        </tr>
+            <tr class="line">
+                <td>
+                    <div class='key-box' id="color4"></div>
+                </td>
+                <td>Can buy, can't rent</td>
+                <td id="gv-color-key-table__house-price">4.5 times and above</td>
+                <td id="gv-color-key-table__annual-income">Greater than 30%</td>
+            </tr>
 
-        <tr>
-            <td class='key-box' id="color4"></td>
-            <td class="gv-color-key-table__description">Can buy, can't rent</td>
-            <td id="gv-color-key-table__house-price">Greater than (and inc.) 4.5 times</td>
-            <td id="gv-color-key-table__annual-income">Greater than 30%</td>
-        </tr>
-        
-    </table>
-    <div class="gv-table-footnote">
-        *You can increase the deposit value in the tool
+        </table>
+        <div class="gv-table-footnote">
+            *While people could buy a property with a 90% mortgage exceeding a 4.5 loan-to-income ratio, or rent a
+            property
+            costing more than 30% of their monthly income, experts warn that beyond these thresholds it is unaffordable
+            as
+            it puts too much pressure on a household budget.
+        </div>
     </div>
+</div>
+</div>

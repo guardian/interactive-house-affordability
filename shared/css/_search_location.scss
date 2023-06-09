@@ -8,7 +8,7 @@
     position: absolute;
     right: 0px;
     justify-content: space-between;
-    @include mq($until:tablet) {
+    @include mq($until:desktop) {
         width: 100%;
         flex-direction: column;
         height:auto;
@@ -43,7 +43,7 @@
     z-index: 1;
 
 
-    @include mq($until:tablet) {
+    @include mq($until:desktop) {
         min-width: calc(100% - 8px);
         margin: 4px 4px 0 4px;
     }
