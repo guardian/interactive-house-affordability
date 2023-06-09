@@ -62,11 +62,14 @@
 .gv-location__input_wrapper {
     position: relative;
     display: flex;
+    align-items: center;
 
     svg {
-        position: absolute;
-        right: 3px;
-        top: 9px;
+        align-self: flex-start;
+        // position: absolute;
+        // right: 3px;
+        // top: 9px;
+        margin-top: 10px;
 
         path {
             fill: #b4b4b4;
