@@ -15,7 +15,7 @@ class Search{
         this.autoComplete = null;
 
         this.autoCompleteJs()
-        
+
         this.resetBtn.addEventListener('click',() => this.reset())
 
         this.input.addEventListener("keyup",  (event) => {
@@ -27,7 +27,10 @@ class Search{
                 }
             }
         })
-        
+
+        this.input.addEventListener('focus', (id) => {
+            this.restart()
+        })
     }
 
     autoCompleteJs() {
@@ -41,7 +44,6 @@ class Search{
                 filter: (list) => {
                     const results = list.filter((item) => {
 
-                        
                         const inputValue = this.autoComplete.input.value.toLowerCase();
                         const itemValue = item.value.code.toLowerCase();
                 
@@ -116,7 +118,6 @@ class Search{
     }
 
     reset(){
-        console.log('search reset')
         this.search = null
         this.input.value = ''
         this.disableResetBtn()

@@ -86,6 +86,8 @@
 
 .gv-color-key-table{
 
+
+    border-top-color: white!important;
     td:first-child{
         display: flex;
         
@@ -109,7 +111,7 @@
         
 
         @include mq($until:desktop){
-            padding: 0 8px 8px 0;
+            padding: 4px 8px 8px 0;
         }
        // border-bottom: 1px solid #DCDCDC;
     }
@@ -154,6 +156,7 @@
 #color5{ background-color: #ffaf81;}
 #color6{ background-color: #e25d28;}
 #color7{ background-color: #a50b06;}
+#color8{ background-color: white; border:1px solid #9e9c9c}
 
 #color4{ background-color: #fff700;}
 
@@ -225,21 +228,7 @@
 //     font-size: 14px;
 // }
 
-.gv-table-footnote{
-    width: 100%;
-    max-width: 620px;
-    background-color: white;
-    @include fs-textSans(3);
-    height: auto;
-    min-height: 20px;
-    margin-top:4px;
-    margin-bottom: 2px;
-    padding: 6px 0 6px 0;
-    font-size: 12px;
-    color: #767676;
-    display: inline-block;
 
-}
 
 .article-body-commercial-selector ul{
     max-width: 620px;

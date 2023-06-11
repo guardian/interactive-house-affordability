@@ -35,11 +35,7 @@ class Form{
 
         if(this.salary.getSalary()){
 
-            
-
             if(this.salary.getSalary().value && this.rooms.getRooms().value >= 0 && this.deposit.getDeposit()){
-
-                console.log(this.rooms.getRooms().value)
 
                 this.valid = true;
             }

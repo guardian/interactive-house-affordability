@@ -144,11 +144,10 @@ option:focus {
         cursor: pointer;
     }
 
-    // @include mq($until:tablet) {
-    //     margin-top: 12px;
-    //     // visibility: hidden;
-    //     align-self: flex-start;
-    // }
+    @include mq($until:desktop) {
+        visibility: hidden;
+        align-self: flex-start;
+    }
 }
 
 .gv-location__label {

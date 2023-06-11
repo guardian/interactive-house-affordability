@@ -24,7 +24,7 @@ class Salary{
                 return value
             }
             else{
-                this.errorMessage.innerHTML = 'Please, enter a valid figure'
+                this.errorMessage.innerHTML = 'Please enter a valid figure'
                 return null
             }
             
