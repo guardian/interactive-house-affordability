@@ -36,6 +36,7 @@ const tableTag = document.querySelector('#gv-table')
 const article = new Article({
     article: articleTag
 })
+
 const table = new Table({
     table: tableTag
 })
@@ -54,10 +55,10 @@ const searchErrorMessage = document.querySelector('#gv-location__error-mesage');
 const codes = postcodes;
 const resetBtn = document.querySelector('.gv-location-reset__btn');
 
-let maxBounds = [[-30, 40], [19, 69]];
+let maxBounds = [[-30, 40], [19, 65]];
 let container = 'gv-map'
 let style = dark
-let zoom = isMobile ? 4 : 5
+let zoom = isMobile ? 4.5 : 5
 let center = [-2.95, 55]
 let mapFeatures;
 
@@ -259,8 +260,6 @@ const onNavChange = (step) => {
     }
 
     if (step == 2) {
-        
-        
 
         let area = map.getAreaSelected();
         let match = data.find(f => f.Postcode_District === area);
@@ -289,8 +288,8 @@ const onNavChange = (step) => {
 
         if (!area) {
 
-            tabs[0].style.display = 'block';
             tabs[2].style.display = 'none';
+            tabs[0].style.display = 'block';
 
             if(isMobile){
                     
@@ -317,11 +316,11 @@ const onNavChange = (step) => {
 
             if (salary && rooms>=0) {
 
-                let housePrice = rooms > 0 ? match[`${rooms}BedSale_MedianPrice`] : match.AllSale_MedianPrice;
-                let houseRent = rooms > 0 ?  match[`${rooms}BedRent_MedianPrice`] : match.AllRent_MedianPrice;
-
                 tabs[2].style.display = 'block';
                 tabs[0].style.display = 'none';
+
+                let housePrice = rooms > 0 ? match[`${rooms}BedSale_MedianPrice`] : match.AllSale_MedianPrice;
+                let houseRent = rooms > 0 ?  match[`${rooms}BedRent_MedianPrice`] : match.AllRent_MedianPrice;
 
                 table.setData({
                     header: area,
